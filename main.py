@@ -1,23 +1,29 @@
 from enum import Enum
+import random
 
-class Schedule1(Enum):
-    freeday = 1
-    recruitment = 2
-    teamgame = 3
-    duel = 4
-    freeforall = 5
-    none = 6
+# you can change number of actions, doesnt matter how many are inside of Schedule or Schedule2
+class Schedule(Enum):
+    freeday = 0
+    recruitment = 1
+    teamgame = 2
+    duel = 3
+    freeforall = 4
+    none = 5
+
 
 class Schedule2(Enum):
-    deathmatch = 1
-    peace = 2
-    brawl = 3
-    raidboss = 4
-    training = 5
-    none = 6
+    deathmatch = 0
+    peace = 1
+    brawl = 2
+    raidboss = 3
+    training = 4
+    none = 5
 
 
 class Arena():
+
+    # counter for lenght of schedule
+    index_of_arena = 0
 
 
     def __init__(self, m_arenaName:str, m_arenaSchedule):
@@ -25,12 +31,17 @@ class Arena():
         self.m_arenaSchedule = m_arenaSchedule
 
     def fill_schedule(self):
-        moved_schedule = self.m_arenaSchedule.pop(0)
-        return self.m_arenaSchedule.append(moved_schedule)
+        if self.index_of_arena < len(self.m_arenaSchedule)-1:
+            self.index_of_arena += 1
+            return self.m_arenaSchedule(self.index_of_arena -1).name
+        else:
+            copy_of_index = self.index_of_arena
+            self.index_of_arena = 0
+            return self.m_arenaSchedule(copy_of_index).name
+
 
     def progress_day(self):
-        print(f"Tomorrows plan of arena {self.m_arenaName} is {self.m_arenaSchedule[1]}.")
-        Arena.fill_schedule(self)
+        print(f"Todays plan of arena {self.m_arenaName} is {self.fill_schedule()}.")
 
     def __str__(self):
         return f"Name of this arena: {self.m_arenaName}"
@@ -59,12 +70,8 @@ class World():
 
 
 
-schedule1 = enumerate(("freeday", "recruitment", "teamgame", "duel", "freeforall", "none"), 0)
-schedule2 = enumerate(["deathmatch", "peace", "training", "RockPaperScizzors", "extinction", "none"],0)
-
-
-arena1 = Arena("Kako", ["freeday", "recruitment", "teamgame", "duel", "freeforall", "none"])
-arena2 = Arena("Hell", ["deathmatch", "peace", "training", "RockPaperScizzors", "extinction"])
+arena1 = Arena("Kako", Schedule)
+arena2 = Arena("Hell", Schedule2)
 myWorld = World([arena1, arena2])
 
 while True:
