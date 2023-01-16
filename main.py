@@ -3,7 +3,7 @@ import random
 
 Schedule = Enum('Schedule', ['freeday', 'recruitment', 'teamgame', 'duel', 'freeforall', 'none'])
 Schedule2 = Enum('Schedule2', ['deathmatch', 'peace', 'brawl', 'raidboss', 'training', 'none'])
-
+random_schedule = ['PK event', 'PVP shiets', 'hunting', 'painting', 'bloodbath']
 
 class Arena():
 
@@ -18,11 +18,19 @@ class Arena():
     def fill_schedule(self):
         self.index_of_arena += 1
         if self.index_of_arena < len(self.m_arenaSchedule):
-            return self.m_arenaSchedule(self.index_of_arena).name
+            if self.m_arenaSchedule(self.index_of_arena).name == 'none':
+                return random.choice(random_schedule)
+            else:
+                return self.m_arenaSchedule(self.index_of_arena).name
         else:
-            copy_of_index = self.index_of_arena
-            self.index_of_arena = 0
-            return self.m_arenaSchedule(copy_of_index).name
+            if self.m_arenaSchedule(self.index_of_arena).name == 'none':
+                self.index_of_arena = 0
+                return random.choice(random_schedule)
+
+            else:
+                copy_of_index = self.index_of_arena
+                self.index_of_arena = 0
+                return self.m_arenaSchedule(copy_of_index).name
 
 
     def progress_day(self):
