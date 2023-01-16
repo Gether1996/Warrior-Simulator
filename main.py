@@ -1,23 +1,8 @@
 from enum import Enum
 import random
 
-# you can change number of actions, doesnt matter how many are inside of Schedule or Schedule2
-class Schedule(Enum):
-    freeday = 0
-    recruitment = 1
-    teamgame = 2
-    duel = 3
-    freeforall = 4
-    none = 5
-
-
-class Schedule2(Enum):
-    deathmatch = 0
-    peace = 1
-    brawl = 2
-    raidboss = 3
-    training = 4
-    none = 5
+Schedule = Enum('Schedule', ['freeday', 'recruitment', 'teamgame', 'duel', 'freeforall', 'none'])
+Schedule2 = Enum('Schedule2', ['deathmatch', 'peace', 'brawl', 'raidboss', 'training', 'none'])
 
 
 class Arena():
@@ -31,9 +16,9 @@ class Arena():
         self.m_arenaSchedule = m_arenaSchedule
 
     def fill_schedule(self):
-        if self.index_of_arena < len(self.m_arenaSchedule)-1:
-            self.index_of_arena += 1
-            return self.m_arenaSchedule(self.index_of_arena -1).name
+        self.index_of_arena += 1
+        if self.index_of_arena < len(self.m_arenaSchedule):
+            return self.m_arenaSchedule(self.index_of_arena).name
         else:
             copy_of_index = self.index_of_arena
             self.index_of_arena = 0
