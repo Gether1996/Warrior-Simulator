@@ -1,43 +1,33 @@
 from enum import Enum
 import random
 
-Schedule = Enum('Schedule', ['freeday', 'recruitment', 'teamgame', 'duel', 'freeforall', 'none'])
-Schedule2 = Enum('Schedule2', ['deathmatch', 'peace', 'brawl', 'raidboss', 'training', 'none'])
-random_schedule = ['PK event', 'PVP shiets', 'hunting', 'painting', 'bloodbath']
+Schedule = Enum('Schedule', ['Freeday', 'Recruitment', 'Teamgame', 'Duel', 'Freeforall', 'NONE'])
 
 class Arena():
 
-    # counter for lenght of schedule
-    index_of_arena = 0
-
-
-    def __init__(self, m_arenaName:str, m_arenaSchedule):
+    def __init__(self, m_arenaName:str, m_arenaSchedule=[]):
+        self.m_arenaSchedule = []
         self.m_arenaName = m_arenaName
-        self.m_arenaSchedule = m_arenaSchedule
+        for i in range(0,5):
+            self.append_schedule_random()
 
     def fill_schedule(self):
-        self.index_of_arena += 1
-        if self.index_of_arena < len(self.m_arenaSchedule):
-            if self.m_arenaSchedule(self.index_of_arena).name == 'none':
-                return random.choice(random_schedule)
-            else:
-                return self.m_arenaSchedule(self.index_of_arena).name
-        else:
-            if self.m_arenaSchedule(self.index_of_arena).name == 'none':
-                self.index_of_arena = 0
-                return random.choice(random_schedule)
-
-            else:
-                copy_of_index = self.index_of_arena
-                self.index_of_arena = 0
-                return self.m_arenaSchedule(copy_of_index).name
-
+        self.m_arenaSchedule.pop(0)
+        self.append_schedule_random()
 
     def progress_day(self):
 
         self.fill_schedule()
-        scheduleName = self.m_arenaSchedule(self.index_of_arena).name
-        print(f"Todays plan of arena {self.m_arenaName} is {scheduleName}.")
+        print(f"# Arena {self.m_arenaName} planned schedule:")
+
+        i = 0
+        for day in self.m_arenaSchedule:
+            i += 1
+            print(f"[{i}] {day.name}")
+
+    def append_schedule_random(self):
+        index = random.randint(1, len(Schedule) - 1)
+        self.m_arenaSchedule.append(Schedule(index))
 
     def __str__(self):
         return f"Name of this arena: {self.m_arenaName}"
@@ -48,10 +38,8 @@ class World():
     m_arenaDay = 0
     m_max_days = 500
 
-
     def __init__(self, m_arenas:list):
         self.m_arenas = m_arenas
-
 
     def simulate_day(self):
         self.m_arenaDay += 1
@@ -65,10 +53,11 @@ class World():
                 x.progress_day()
 
 
+arenas = []
+arenas.append(Arena("Kako"))
+arenas.append(Arena("Hell"))
 
-arena1 = Arena("Kako", Schedule)
-arena2 = Arena("Hell", Schedule2)
-myWorld = World([arena1, arena2])
+myWorld = World(arenas)
 
 while True:
     myWorld.simulate_day()
