@@ -34,7 +34,10 @@ class Arena():
 
 
     def progress_day(self):
-        print(f"Todays plan of arena {self.m_arenaName} is {self.fill_schedule()}.")
+
+        self.fill_schedule()
+        scheduleName = self.m_arenaSchedule(self.index_of_arena).name
+        print(f"Todays plan of arena {self.m_arenaName} is {scheduleName}.")
 
     def __str__(self):
         return f"Name of this arena: {self.m_arenaName}"
