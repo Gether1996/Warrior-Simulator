@@ -11,8 +11,8 @@ config['Arena_Default'] = {
     # set up how many schedules will be generated each day
 }
 
-def x():
+def num_schedules():
     return int(config['Arena_Default']['LengthOfArenaSchedule'])
 
-def y():
+def num_max_days():
     return int(config['World_Default']['NumOfSimulatedDays'])
