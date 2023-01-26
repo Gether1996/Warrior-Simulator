@@ -1,0 +1,20 @@
+Since we are doing gladiator rome simulator, we should solve our name generation for the arenas. We are going to create simple database for that.
+
+Use this website https://www.fantasynamegenerators.com/roman-town-names.php
+
+and generate at least 100 town names and copy paste them into .txt file so the file looks like this:
+
+Brigetio
+Isca Dumnoniorum
+Bellunum
+Casilinum
+Canatha
+Anio
+Castellum Apud Confluentes
+Caesena
+Oppidum Atuaticorum
+Tifernum Tiberinum
+
+...
+
+Save this file next to our project, and load the names into a list of strings in config.py, use this list to initialize the name of the arena upon arena's creation. The name is chosen from the list by random.
