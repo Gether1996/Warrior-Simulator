@@ -1,18 +1,7 @@
 import configparser
 
 config = configparser.ConfigParser()
-config['World_Default'] = {
-    "NumOfSimulatedDays": "500"
-    # u can set up number of days which will be simulated in World
-}
+config.read('config.ini')
 
-config['Arena_Default'] = {
-    "LengthOfArenaSchedule": "5"
-    # set up how many schedules will be generated each day
-}
-
-def num_schedules():
-    return int(config['Arena_Default']['LengthOfArenaSchedule'])
-
-def num_max_days():
-    return int(config['World_Default']['NumOfSimulatedDays'])
+WorldMaxDays = int(config['DEFAULT']["World_Max_Days"])
+NumOfArenaSchedules = int(config['DEFAULT']["Arena_Schedules"])
