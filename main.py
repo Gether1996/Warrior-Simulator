@@ -4,9 +4,10 @@ from config import x, y
 
 Schedule = Enum('Schedule', ['Freeday', 'Recruitment', 'Teamgame', 'Duel', 'Freeforall', 'NONE'])
 
-class Arena():
 
-    def __init__(self, m_arenaName:str, m_arenaSchedule=[]):
+class Arena:
+
+    def __init__(self, m_arenaName: str, m_arenaSchedule=[]):
         self.m_arenaSchedule = []
         self.m_arenaName = m_arenaName
         # set up x() in config.py
@@ -35,13 +36,12 @@ class Arena():
         return f"Name of this arena: {self.m_arenaName}"
 
 
-class World():
-
+class World:
     m_arenaDay = 0
     # set up y() in config.py
     m_max_days = y()
 
-    def __init__(self, m_arenas:list):
+    def __init__(self, m_arenas: list):
         self.m_arenas = m_arenas
 
     def simulate_day(self):
@@ -52,16 +52,12 @@ class World():
             quit()
         else:
             print(f"Day: {self.m_arenaDay}")
-            for x in self.m_arenas:
-                x.progress_day()
+            for t in self.m_arenas:
+                t.progress_day()
 
 
-arenas = []
-arenas.append(Arena("Kako"))
-arenas.append(Arena("Hell"))
-
+arenas = [Arena("Kako"), Arena("Hell")]
 myWorld = World(arenas)
 
 while True:
     myWorld.simulate_day()
-
