@@ -1,0 +1,16 @@
+# Introduce new python file that will contain all global variables that will be used as settings
+- You can include this new python file to our main file and use variables from the new file
+- The new python file will have option to load and initialize the variables from JSON file
+- For starters, we can have two global variables that will be initialized this way: NumOfSimulatedDays and LengthOfArenaSchedule. 
+One will be under 'World' category, the second one under 'Arena' category. The resulting JSON file could look like this:
+- Our main file will be using variables initialized this way (so that will replace our current implementation which is a 'magic number' at the moment)
+
+[World]
+NumOfSimulatedDays = 500
+
+[Arena]
+LengthOfArenaSchedule = 5
+
+Hints:
+https://docs.python.org/3/library/configparser.html
+https://www.geeksforgeeks.org/how-to-import-variables-from-another-file-in-python/
