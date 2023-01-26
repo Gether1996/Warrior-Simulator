@@ -1,6 +1,6 @@
 from enum import Enum
 import random
-from config import *
+from config import x, y
 
 Schedule = Enum('Schedule', ['Freeday', 'Recruitment', 'Teamgame', 'Duel', 'Freeforall', 'NONE'])
 
@@ -9,7 +9,8 @@ class Arena():
     def __init__(self, m_arenaName:str, m_arenaSchedule=[]):
         self.m_arenaSchedule = []
         self.m_arenaName = m_arenaName
-        for i in range(int(config['Arena_Default']['LengthOfArenaSchedule'])):
+        # set up x() in config.py
+        for i in range(x()):
             self.append_schedule_random()
 
     def fill_schedule(self):
@@ -37,7 +38,8 @@ class Arena():
 class World():
 
     m_arenaDay = 0
-    m_max_days = int(config['World_Default']['NumOfSimulatedDays'])
+    # set up y() in config.py
+    m_max_days = y()
 
     def __init__(self, m_arenas:list):
         self.m_arenas = m_arenas
