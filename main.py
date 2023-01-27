@@ -7,7 +7,7 @@ Schedule = Enum('Schedule', ['Freeday', 'Recruitment', 'Teamgame', 'Duel', 'Free
 
 class Arena:
 
-    def __init__(self, m_arenaSchedule=[]):
+    def __init__(self):
         self.m_arenaSchedule = []
         self.m_arenaName = random.choice(config.ListOfArenaNames)
         for i in range(config.NumOfArenaSchedules):
