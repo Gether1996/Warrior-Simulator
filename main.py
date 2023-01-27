@@ -1,7 +1,7 @@
 from enum import Enum
 import random
 import config
-from Serializable import Serializable
+from serializable import Serializable
 
 Schedule = Enum('Schedule', ['Freeday', 'Recruitment', 'Teamgame', 'Duel', 'Freeforall'])
 
