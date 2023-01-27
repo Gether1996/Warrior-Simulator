@@ -7,10 +7,9 @@ Schedule = Enum('Schedule', ['Freeday', 'Recruitment', 'Teamgame', 'Duel', 'Free
 
 class Arena:
 
-    def __init__(self, m_arenaName: str, m_arenaSchedule=[]):
+    def __init__(self, m_arenaSchedule=[]):
         self.m_arenaSchedule = []
-        self.m_arenaName = m_arenaName
-        # configure num_schedules() in config.py
+        self.m_arenaName = random.choice(config.ListOfArenaNames)
         for i in range(config.NumOfArenaSchedules):
             self.append_schedule_random()
 
@@ -38,7 +37,6 @@ class Arena:
 
 class World:
     m_arenaDay = 0
-    # configure num_max_days() in config.py
     m_max_days = config.WorldMaxDays
 
     def __init__(self, m_arenas: list):
@@ -56,7 +54,9 @@ class World:
                 t.progress_day()
 
 
-arenas = [Arena("Kako"), Arena("Hell")]
+arena1 = Arena()
+arena2 = Arena()
+arenas = [arena1, arena2]
 myWorld = World(arenas)
 
 while True:
