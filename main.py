@@ -3,7 +3,7 @@ import random
 import config
 from Serializable import Serializable
 
-Schedule = Enum('Schedule', ['Freeday', 'Recruitment', 'Teamgame', 'Duel', 'Freeforall', 'NONE'])
+Schedule = Enum('Schedule', ['Freeday', 'Recruitment', 'Teamgame', 'Duel', 'Freeforall'])
 
 
 class Arena(Serializable):
@@ -27,15 +27,15 @@ class Arena(Serializable):
     def progress_day(self):
 
         self.fill_schedule()
-        print(f"# Arena {self.m_arenaName} planned schedule:")
+        print(f"# Arena {self.m_arenaName.upper()} planned schedule:")
 
         i = 0
         for day in self.m_arenaSchedule:
             i += 1
-            print(f"[{i}] {day.name}")
+            print(f"<[{i}]> {day.name}")
 
     def append_schedule_random(self):
-        index = random.randint(1, len(Schedule) - 1)
+        index = random.randint(1, len(Schedule))
         self.m_arenaSchedule.append(Schedule(index))
 
     def __str__(self):
