@@ -29,4 +29,23 @@ which hints how this could is going to be chained -> the raketa in for cycle wil
 
 For now, focus on the save function.
 Try to think how this could be implemented via https://www.geeksforgeeks.org/abstract-classes-in-python/ !
-Note that save_object and load_object will have to be implemented by each class that will require serialization.
+
+Note that save_object and load_object will have to be implemented by each class that will require serialization:
+
+serializable.py
+
+class Serializable(ABC):
+
+    @abstractmethod
+    def save_object(self):
+        ...
+
+    @abstractmethod
+    def load_object(self):
+        ...
+		
+		
+from abc import (
+  ABC,
+  abstractmethod,
+)
