@@ -1,0 +1,32 @@
+We are going to prepare the groundwork for save/load system in JSON format. We'll be saving and loading each object.
+
+Each object that will require serialization (AKA saving and loading) will have to implement 2 functions. 'save_object' and 'load_object'
+
+Saving and loading will be done in 'waterfall' way, which means they will be loading from top of hierarchy to bottom and saving from bottom to top.
+This depends on the ownership of the objects:
+
+Example:
+
+World owns arenas
+Arenas owns gladiators
+
+Saving will be bottom up: First will be saved gladiators, then arenas, then world.
+Loading in reverse: First will be loaded World, then Arenas and at last gladiators
+
+save_object will return a JSON dictionary of data for given object:
+
+example for save_object on object ABC that has 3 properties kulo, pelo a rakety. Rakety is list of another object type. save_object could look like this:
+
+data = {}
+data['kulo'] = self.kulo
+data['pelo'] = self.pelo
+data['rakety'] = []
+
+for raketa in self.rakety:
+	data['rakety'].append(raketa.save_object)
+	
+which hints how this could is going to be chained -> the raketa in for cycle will create it's own dictionary and that will be saved in list owned by ABC
+
+For now, focus on the save function.
+Try to think how this could be implemented via https://www.geeksforgeeks.org/abstract-classes-in-python/ !
+Note that save_object and load_object will have to be implemented by each class that will require serialization.

@@ -1,0 +1,10 @@
+We are going to have 2D world! We will need 2D coordinates for our world objects.
+
+- Create new python file with class WorldObject, this class is going to have 2 properties, position_x and position_y, this will represent world coordinates.
+
+Our world coordinate system is going to be simple one, tile based, on each tile a one simple object will reside.
+
+- Modify our code that Arenas represent world objects. That means, Arenas are going to inherit from WorldObject, thus they will be able to return inherited position_x and position_y coordinates.
+
+- Create a new python file called World, move our world implimenetation into this file. In our world class, create a two dimensional array as a property called m_map. We will be later on filling this array with objects of type WorldObject.
+- Create empty function inside world class called initialize_world, we will be creating arenas and other world objects inside this function later on, and putting those inside our world map.
