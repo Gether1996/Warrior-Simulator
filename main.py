@@ -1,17 +1,24 @@
 from enum import Enum
 import random
 import config
+from serializable import Serializable
 
-Schedule = Enum('Schedule', ['Freeday', 'Recruitment', 'Teamgame', 'Duel', 'Freeforall', 'NONE'])
+Schedule = Enum('Schedule', ['Freeday', 'Recruitment', 'Teamgame', 'Duel', 'Freeforall'])
 
 
-class Arena:
+class Arena(Serializable):
 
     def __init__(self):
         self.m_arenaSchedule = []
         self.m_arenaName = random.choice(config.ListOfArenaNames)
         for i in range(config.NumOfArenaSchedules):
             self.append_schedule_random()
+
+    def save_object(self):
+        pass
+
+    def load_object(self):
+        pass
 
     def fill_schedule(self):
         self.m_arenaSchedule.pop(0)
@@ -20,27 +27,33 @@ class Arena:
     def progress_day(self):
 
         self.fill_schedule()
-        print(f"# Arena {self.m_arenaName} planned schedule:")
+        print(f"# Arena {self.m_arenaName.upper()} planned schedule:")
 
         i = 0
         for day in self.m_arenaSchedule:
             i += 1
-            print(f"[{i}] {day.name}")
+            print(f"<[{i}]> {day.name}")
 
     def append_schedule_random(self):
-        index = random.randint(1, len(Schedule) - 1)
+        index = random.randint(1, len(Schedule))
         self.m_arenaSchedule.append(Schedule(index))
 
     def __str__(self):
         return f"Name of this arena: {self.m_arenaName}"
 
 
-class World:
+class World(Serializable):
     m_arenaDay = 0
     m_max_days = config.WorldMaxDays
 
     def __init__(self, m_arenas: list):
         self.m_arenas = m_arenas
+
+    def save_object(self):
+        pass
+
+    def load_object(self):
+        pass
 
     def simulate_day(self):
         self.m_arenaDay += 1
