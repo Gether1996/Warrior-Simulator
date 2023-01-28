@@ -1,10 +1,24 @@
-We are going to have 2D world! We will need 2D coordinates for our world objects.
+Let's tidy up our main and put our save/load in action. Create a new class called WorldGenerator. This class is going to have three functions. SaveWorld, LoadWorld and GenerateWorld.
+1 property world_version. 
 
-- Create new python file with class WorldObject, this class is going to have 2 properties, position_x and position_y, this will represent world coordinates.
+- In main function, create instance of this class, and call LoadWorld which will return instance of World. If World is null, it will call the GenerateWorld function.
+- Run x days of simulation on this instance, where x is global variable we have defined as NumOfSimulatedDays (implement this)
+- At the end of simulation, call SaveWorld on our world generator, this class will save additionaly a current date and time at which the save occured, also world_version property.
 
-Our world coordinate system is going to be simple one, tile based, on each tile a one simple object will reside.
+world_version is going to represent versioning of world saves, since loading/saving different versions would cause corruption in JSON inconsistencies, we, programmators, are going to save this version number manually
+in code every time a change happens in our save_object and load_object functionality. So world_version will have value of 1 at the beggining, we will increment this number later on.
 
-- Modify our code that Arenas represent world objects. That means, Arenas are going to inherit from WorldObject, thus they will be able to return inherited position_x and position_y coordinates.
+LoadWorld is going to behave like this:
 
-- Create a new python file called World, move our world implimenetation into this file. In our world class, create a two dimensional array as a property called m_map. We will be later on filling this array with objects of type WorldObject.
-- Create empty function inside world class called initialize_world, we will be creating arenas and other world objects inside this function later on, and putting those inside our world map.
+It will read the JSON file and if the version of the loaded JSON file is the same as world_version, it will load and initialize the world data. 
+
+SaveWorld is going to behave like this:
+
+It will write out the dictionary data into JSON. Additional data is world_version and time and date of execution of this function.
+
+
+--------------------------
+
+After implementing all of this, our world is going to be somewhat persistent. If we run it first time without the save file, it will generate new world, run x days of simulation and save the data.
+Next time of running this, we'll load the data and do another x days of simulation and save the data again. Persistencyyyyyyy
+

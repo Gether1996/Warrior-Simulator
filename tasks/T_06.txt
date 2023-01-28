@@ -1,23 +1,57 @@
-Let's tidy up our main and put our save/load in action. Create a new class called WorldGenerator. This class is going to have three functions. SaveWorld, LoadWorld and GenerateWorld.
-1 property world_version. 
+We are going to move into creating Gladiators! Implement gladiator class in separate python file with following attributes: 
+NOTE: variables that are global are config-urable via our .ini file
 
-- In main function, create instance of this class, and call LoadWorld which will return instance of World. If World is null, it will call the GenerateWorld function.
-- Run x days of simulation on this instance, where x is global variable we have defined as NumOfSimulatedDays (implement this)
-- At the end of simulation, call SaveWorld on our world generator, this class will save additionaly a current date and time at which the save occured, also world_version property.
+- m_name, m_gold, m_strength, m_agility, m_vitality, m_luck, m_max_health, m_current_health
 
-world_version is going to represent versioning of world saves, since loading/saving different versions would cause corruption in JSON inconsistencies, we, programmators, are going to save this version number manually
-in code every time a change happens in our save_object and load_object functionality. So world_version will have value of 1 at the beggining, we will increment this number later on.
+following functions:
 
-LoadWorld is going to behave like this:
+- get_damage_range, get_hit_chance, get_crit_chance, get_crit_scale, get_dodge_chance, print_stats
 
-It will read the JSON file and if the version of the loaded JSON file is the same as world_version, it will load and initialize the world data. 
+---------------------
+in constructor do:
 
-SaveWorld is going to behave like this:
+create a list similar to arena names (use similar generator or the same, I don't care), and pick a random name from that list, assign to m_name 
+roll a random number between 5 and 12 to str, agi, vit, luck and assign that number to appropriate property
 
-It will write out the dictionary data into JSON. Additional data is world_version and time and date of execution of this function.
+implement functions like this:
+
+---------------------
+# get_damage_range:
+
+return a python tuple as: (round down [config.GladiatorStrengthLowerDmgRng(implement this!, let's say 0.25 now) of strength], round down [config.GladiatorStrengthUpperDmgRng(implement this!, let's say 0.5 now)] of strength)
+
+and make sure it does not return a negative value AND make sure the upper limit is always at least 1. (so make sure the worst it can get is (0,1))
+
+---------------------
+# get_hit_chance:
+
+return a config.GladiatorBaseHitChance (implement this!, let's say 40 now) + m_agility * config.GladiatorAgilityScalingHitChance (implement this! lets say 3 now)
+
+and make sure it does not go over 100 or under 0
+
+---------------------
+# get_crit_chance 
+
+return a config.GladiatorAgilityScalingCritChance (implement this!, let's say 0.25 now) * m_agility + config.GladiatorLuckScalingCritChance (implement this!, let's say 0.5 now) * m_luck
+
+make sure it's above 0 and under 100
+
+---------------------
+# get_crit_scale
+
+return a  1 + (config.GladiatorAgilityScalingCritDmg (implement this!, let's say 1 now) * m_agility + config.GladiatorLuckScalingCritDmg (implement this!, let's say 0.25 now) * m_luck) * 0.01
+
+make sure it's above 0
+
+---------------------
+# get dodge_chance
+
+return a config.GladiatorBaseDodgeChance (implement this!, let's say 5 now) + m_agility * config.GladiatorAgilityScalingDodgeChance (implement this! lets say 1 now)
+
+---------------------
+# print stats
+
+print all statistics about gladiator in a nice way. Every property and every get we've implemented
 
 
---------------------------
-
-After implementing all of this, our world is going to be somewhat persistent. If we run it first time without the save file, it will generate new world, run x days of simulation and save the data.
-Next time of running this, we'll load the data and do another x days of simulation and save the data again. Persistencyyyyyyy
+Make sure gladiator is serializable!
