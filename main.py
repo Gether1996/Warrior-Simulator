@@ -2,6 +2,7 @@ from enum import Enum
 import random
 import config
 from serializable import Serializable
+import json
 
 Schedule = Enum('Schedule', ['Freeday', 'Recruitment', 'Teamgame', 'Duel', 'Freeforall'])
 
@@ -15,7 +16,7 @@ class Arena(Serializable):
             self.append_schedule_random()
 
     def save_object(self):
-        pass
+        return self.m_arenaName
 
     def load_object(self):
         pass
@@ -50,12 +51,24 @@ class World(Serializable):
         self.m_arenas = m_arenas
 
     def save_object(self):
-        pass
+        return self.m_max_days
 
     def load_object(self):
         pass
 
+    def save_to_json_data(self, ):
+        data = {
+            "MaxDaysOfArena": self.save_object(),
+            "ArenasInsideWorld": []
+        }
+        for x in self.m_arenas:
+            data["ArenasInsideWorld"].append(x.save_object())
+        json_data = json.dumps(data, indent=3)
+        with open("JSON_data.json", "w") as outfile:
+            outfile.write(json_data)
+
     def simulate_day(self):
+        self.save_to_json_data()
         self.m_arenaDay += 1
         if self.m_arenaDay == self.m_max_days:
             print(f"Day: {self.m_arenaDay} - maximum days count reached.\n"
