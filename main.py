@@ -16,7 +16,7 @@ class Arena(Serializable):
             self.append_schedule_random()
 
     def save_object(self):
-        return self.m_arenaName
+        pass
 
     def load_object(self):
         pass
@@ -50,25 +50,25 @@ class World(Serializable):
     def __init__(self, m_arenas: list):
         self.m_arenas = m_arenas
 
-    def save_object(self):
-        return self.m_max_days
-
     def load_object(self):
         pass
 
-    def save_to_json_data(self, ):
+    def save_object(self):
         data = {
-            "MaxDaysOfArena": self.save_object(),
-            "ArenasInsideWorld": []
+            "m_max_days": self.m_max_days,
+            "m_arenas": [],
         }
         for x in self.m_arenas:
-            data["ArenasInsideWorld"].append(x.save_object())
+            data["m_arenas"].append(x.m_arenaName)
+        for y in data["m_arenas"]:
+            data["m_arenaSchedule " + y] = "something"  # TODO idk how to aproach arena schedules
+
         json_data = json.dumps(data, indent=3)
         with open("JSON_data.json", "w") as outfile:
             outfile.write(json_data)
 
     def simulate_day(self):
-        self.save_to_json_data()
+        self.save_object()
         self.m_arenaDay += 1
         if self.m_arenaDay == self.m_max_days:
             print(f"Day: {self.m_arenaDay} - maximum days count reached.\n"
