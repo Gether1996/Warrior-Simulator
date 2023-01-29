@@ -5,6 +5,8 @@ from serializable import Serializable
 import json
 
 Schedule = Enum('Schedule', ['Freeday', 'Recruitment', 'Teamgame', 'Duel', 'Freeforall'])
+f = open('JSON_data.json')
+data_from_json = json.loads(f.read())
 
 
 class Arena(Serializable):
@@ -21,11 +23,13 @@ class Arena(Serializable):
             "m_arenaSchedule": []
         }
         for x in self.m_arenaSchedule:
-            data["m_arenaSchedule"].append(x.name)
+            data["m_arenaSchedule"].append(x.value)
         return data
 
     def load_object(self):
-        pass
+        for x in data_from_json["m_arenas"]:
+            self.m_arenaName = x["m_arenaName"]
+            self.m_arenaSchedule = x["m_arenaSchedule"]
 
     def fill_schedule(self):
         self.m_arenaSchedule.pop(0)
@@ -57,7 +61,9 @@ class World(Serializable):
         self.m_arenas = m_arenas
 
     def load_object(self):
-        pass
+        self.m_max_days = data_from_json["m_max_days"]
+        for x in self.m_arenas:
+            x.load_object()
 
     def save_object(self):
         data = {
@@ -72,7 +78,6 @@ class World(Serializable):
             outfile.write(json_data)
 
     def simulate_day(self):
-        self.save_object()
         self.m_arenaDay += 1
         if self.m_arenaDay == self.m_max_days:
             print(f"Day: {self.m_arenaDay} - maximum days count reached.\n"
@@ -88,6 +93,8 @@ arena1 = Arena()
 arena2 = Arena()
 arenas = [arena1, arena2]
 myWorld = World(arenas)
-
+myWorld.save_object()
+#myWorld.load_object()
 while True:
     myWorld.simulate_day()
+
