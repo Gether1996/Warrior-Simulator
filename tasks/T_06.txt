@@ -1,4 +1,5 @@
-We are going to move into creating Gladiators! Implement gladiator class in separate python file with following attributes: 
+We are going to move into creating Gladiators! Implement gladiator class in separate python file with following
+ attributes:
 NOTE: variables that are global are config-urable via our .ini file
 
 - m_name, m_gold, m_strength, m_agility, m_vitality, m_luck, m_max_health, m_current_health
@@ -10,7 +11,8 @@ following functions:
 ---------------------
 in constructor do:
 
-create a list similar to arena names (use similar generator or the same, I don't care), and pick a random name from that list, assign to m_name 
+create a list similar to arena names (use similar generator or the same, I don't care), and pick
+a random name from that list, assign to m_name
 roll a random number between 5 and 12 to str, agi, vit, luck and assign that number to appropriate property
 
 implement functions like this:
@@ -18,35 +20,42 @@ implement functions like this:
 ---------------------
 # get_damage_range:
 
-return a python tuple as: (round down [config.GladiatorStrengthLowerDmgRng(implement this!, let's say 0.25 now) of strength], round down [config.GladiatorStrengthUpperDmgRng(implement this!, let's say 0.5 now)] of strength)
+return a python tuple as: (round down [config.GladiatorStrengthLowerDmgRng(implement this!,
+ let's say 0.25 now) of strength], round down [config.GladiatorStrengthUpperDmgRng(implement this!, let's say 0.5 now)]
+  of strength)
 
-and make sure it does not return a negative value AND make sure the upper limit is always at least 1. (so make sure the worst it can get is (0,1))
+and make sure it does not return a negative value AND make sure the upper limit is always at least
+ 1. (so make sure the worst it can get is (0,1))
 
 ---------------------
 # get_hit_chance:
 
-return a config.GladiatorBaseHitChance (implement this!, let's say 40 now) + m_agility * config.GladiatorAgilityScalingHitChance (implement this! lets say 3 now)
+return a config.GladiatorBaseHitChance (implement this!, let's say 40 now)
+ + m_agility * config.GladiatorAgilityScalingHitChance (implement this! lets say 3 now)
 
 and make sure it does not go over 100 or under 0
 
 ---------------------
 # get_crit_chance 
 
-return a config.GladiatorAgilityScalingCritChance (implement this!, let's say 0.25 now) * m_agility + config.GladiatorLuckScalingCritChance (implement this!, let's say 0.5 now) * m_luck
+return a config.GladiatorAgilityScalingCritChance (implement this!, let's say 0.25 now) *
+m_agility + config.GladiatorLuckScalingCritChance (implement this!, let's say 0.5 now) * m_luck
 
 make sure it's above 0 and under 100
 
 ---------------------
 # get_crit_scale
 
-return a  1 + (config.GladiatorAgilityScalingCritDmg (implement this!, let's say 1 now) * m_agility + config.GladiatorLuckScalingCritDmg (implement this!, let's say 0.25 now) * m_luck) * 0.01
+return a  1 + (config.GladiatorAgilityScalingCritDmg (implement this!, let's say 1 now) *
+m_agility + config.GladiatorLuckScalingCritDmg (implement this!, let's say 0.25 now) * m_luck) * 0.01
 
 make sure it's above 0
 
 ---------------------
 # get dodge_chance
 
-return a config.GladiatorBaseDodgeChance (implement this!, let's say 5 now) + m_agility * config.GladiatorAgilityScalingDodgeChance (implement this! lets say 1 now)
+return a config.GladiatorBaseDodgeChance (implement this!, let's say 5 now) + m_agility
+* config.GladiatorAgilityScalingDodgeChance (implement this! lets say 1 now)
 
 ---------------------
 # print stats
