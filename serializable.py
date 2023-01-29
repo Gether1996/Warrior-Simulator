@@ -8,5 +8,5 @@ class Serializable(ABC):
         ...
 
     @abstractmethod
-    def load_object(self):
+    def load_object(self, data):
         ...
