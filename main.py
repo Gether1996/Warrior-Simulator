@@ -16,7 +16,13 @@ class Arena(Serializable):
             self.append_schedule_random()
 
     def save_object(self):
-        pass
+        data = {
+            "m_arenaName": self.m_arenaName,
+            "m_arenaSchedule": []
+        }
+        for x in self.m_arenaSchedule:
+            data["m_arenaSchedule"].append(x.name)
+        return data
 
     def load_object(self):
         pass
@@ -59,9 +65,7 @@ class World(Serializable):
             "m_arenas": [],
         }
         for x in self.m_arenas:
-            data["m_arenas"].append(x.m_arenaName)
-        for y in data["m_arenas"]:
-            data["m_arenaSchedule " + y] = "something"  # TODO idk how to aproach arena schedules
+            data["m_arenas"].append(x.save_object())
 
         json_data = json.dumps(data, indent=3)
         with open("JSON_data.json", "w") as outfile:
