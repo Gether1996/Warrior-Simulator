@@ -21,6 +21,7 @@ Enter your choice: ...
 
 // Quit will exit the game
 // If we hit generate new world, clear the console screen, generate header and we should be given a option to give it a name (implement this, m_world_name in World class perhaps).
+// Re-use and refactor WorldGenerator appropriately
 
 ###################
 #  KULO GAME      #
@@ -49,7 +50,7 @@ Current day is "m_world_day".
 
 Enter number of days to simulate: ...
 
-// Upon giving a number and pressing enter, we should be taken back to our world menu, with days already simulated
+// Upon giving a number and pressing enter, we should be given the output with prompts to press enter to return to world menu
 
 ###################
 #  KULO GAME      #
