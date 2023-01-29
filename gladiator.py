@@ -16,10 +16,10 @@ class Gladiator:
 
     def generate_default_gladiator(self):
         self.m_name = random.choice(config_GladiatorNames)
-        self.m_strength = config_Strength + random.randint(5, 12)
-        self.m_agility = config_Agility + random.randint(5, 12)
-        self.m_vitality = config_Vitality + random.randint(5, 12)
-        self.m_luck = config_Luck + random.randint(5, 12)
+        self.m_strength = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
+        self.m_agility = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
+        self.m_vitality = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
+        self.m_luck = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
         self.m_max_health = config_Max_Health
         self.m_current_health = config_Max_Health
         self.m_gold = config_Gold
