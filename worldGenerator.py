@@ -7,7 +7,7 @@ from datetime import *
 class WorldGenerator:
 
     def __init__(self):
-        self.m_world_version = 2
+        self.m_world_version = 1
 
     def save_world(self, world):
         now = datetime.now()
