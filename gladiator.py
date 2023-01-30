@@ -20,8 +20,8 @@ class Gladiator:
         self.m_agility = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
         self.m_vitality = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
         self.m_luck = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
-        self.m_max_health = config_Max_Health
-        self.m_current_health = config_Max_Health
+        self.m_max_health = self.get_max_health()
+        self.m_current_health = self.get_max_health()
         self.m_gold = config_Gold
 
     def get_damage_range(self):
@@ -32,6 +32,9 @@ class Gladiator:
     def get_hit_chance(self):
         x = (config_GladiatorBaseHitChance + self.m_agility) * config_GladiatorAgilityScalingHitChance
         return x if x <= 100 else 100
+
+    def get_max_health(self):
+        return round((config_Max_Health + self.m_vitality) * config_GladiatorVitalityScalingHealth)
 
     def get_crit_chance(self):
         x = (config_GladiatorAgilityScalingCritChance * self.m_agility) \
@@ -49,7 +52,7 @@ class Gladiator:
 
     def print_stats(self):
         return print(f"Stats of Gladiator <> {self.m_name} <>\n"
-                     f"  Current health {self.m_current_health} of maximum {self.m_max_health}\n"
+                     f"  Current health {self.m_current_health} of maximum {self.get_max_health()}\n"
                      f"    Strength: {self.m_strength}\n"
                      f"     Agility: {self.m_agility}\n"
                      f"      Vitality: {self.m_vitality}\n"
