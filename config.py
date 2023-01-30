@@ -11,6 +11,7 @@ config_NumOfSimulatedDays = int(config['WORLD']['NumOfSimulatedDays'])
 arena_names = open('arena_names.txt')
 config_ListOfArenaNames = [line.rstrip() for line in set(arena_names)]
 config_NumOfArenaSchedules = int(config['ARENA']["Arena_Schedules"])
+config_NumOfArenaGladiators = int(config['ARENA']['NumOfArenaGladiators'])
 
 # Gladiator configurations ##################################
 gladiator_names = open('gladiator_names.txt')

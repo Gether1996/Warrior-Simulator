@@ -1,8 +1,10 @@
-from world import *
 from math import floor
+from serializable import Serializable
+import random
+from config import *
 
 
-class Gladiator:
+class Gladiator(Serializable):
 
     def __init__(self):
         self.m_name = ""
@@ -23,6 +25,29 @@ class Gladiator:
         self.m_max_health = self.get_max_health()
         self.m_current_health = self.get_max_health()
         self.m_gold = config_Gold
+
+    def save_object(self):
+        data = {
+            "m_name": self.m_name,
+            "m_strength": self.m_strength,
+            "m_agility": self.m_agility,
+            "m_vitality": self.m_vitality,
+            "m_luck": self.m_luck,
+            "m_max_health": self.m_max_health,
+            "m_current_health": self.m_current_health,
+            "m_gold": self.m_gold
+        }
+        return data
+
+    def load_object(self, data):
+        self.m_name = data["m_name"]
+        self.m_strength = data["m_strength"]
+        self.m_agility = data["m_agility"]
+        self.m_vitality = data["m_vitality"]
+        self.m_luck = data["m_luck"]
+        self.m_max_health = data["m_max_health"]
+        self.m_current_health = data["m_current_health"]
+        self.m_gold = data["m_gold"]
 
     def get_damage_range(self):
         low = floor(self.m_strength * config_GladiatorStrengthLowerDmgRng)
@@ -63,8 +88,3 @@ class Gladiator:
                      f"       Crit chance: {self.get_crit_chance()}\n"
                      f"      Crit damage: {self.get_crit_scale()}\n"
                      f"     Dodge chance: {self.get_dodge_chance()}\n")
-
-
-rasto = Gladiator()
-rasto.generate_default_gladiator()
-rasto.print_stats()

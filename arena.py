@@ -2,6 +2,7 @@ from enum import Enum
 from serializable import *
 import random
 from config import *
+from gladiator import Gladiator
 
 Schedule = Enum('Schedule', ['Freeday', 'Recruitment', 'Teamgame', 'Duel', 'Freeforall'])
 
@@ -11,26 +12,39 @@ class Arena(Serializable):
     def __init__(self):
         self.m_arenaSchedule = []
         self.m_arenaName = ""
+        self.m_arenaGladiators = []
 
     def generate_default_arena(self):
+        self.m_arenaGladiators = []
         self.m_arenaSchedule = []
         self.m_arenaName = random.choice(config_ListOfArenaNames)
         for i in range(config_NumOfArenaSchedules):
             self.append_schedule_random()
+        for y in range(config_NumOfArenaGladiators):
+            gladiator = Gladiator()
+            gladiator.generate_default_gladiator()
+            self.m_arenaGladiators.append(gladiator)
 
     def save_object(self):
         data = {
             "m_arenaName": self.m_arenaName,
-            "m_arenaSchedule": []
+            "m_arenaSchedule": [],
+            "m_arenaGladiators": []
         }
         for x in self.m_arenaSchedule:
             data["m_arenaSchedule"].append(x.value)
+        for gladiator in self.m_arenaGladiators:
+            data["m_arenaGladiators"].append(gladiator.save_object())
         return data
 
     def load_object(self, data):
         self.m_arenaName = data["m_arenaName"]
         for scheduleData in data["m_arenaSchedule"]:
             self.m_arenaSchedule.append(Schedule(scheduleData))
+        for gladiatorData in data["m_arenaGladiators"]:
+            gladiator = Gladiator()
+            gladiator.load_object(gladiatorData)
+            self.m_arenaGladiators.append(gladiator)
 
     def fill_schedule(self):
         self.m_arenaSchedule.pop(0)

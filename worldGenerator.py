@@ -3,6 +3,7 @@ import os
 import json
 from datetime import *
 
+
 class WorldGenerator:
 
     def __init__(self):
@@ -38,4 +39,5 @@ class WorldGenerator:
                 world = World()
                 world.load_object(data_from_json["m_world"])
                 return world
-        return self.generate_world()
+        else:
+            return self.generate_world()
