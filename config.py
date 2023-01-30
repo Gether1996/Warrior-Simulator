@@ -4,6 +4,8 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 
 # World configurations ###########################
+world_names = open('world_names.txt')
+config_ListOfWorldNames = [line.rstrip() for line in set(world_names)]
 config_WorldMaxDays = int(config['WORLD']["World_Max_Days"])
 config_NumOfSimulatedDays = int(config['WORLD']['NumOfSimulatedDays'])
 
