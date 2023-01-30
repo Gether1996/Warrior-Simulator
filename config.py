@@ -16,11 +16,9 @@ config_NumOfArenaSchedules = int(config['ARENA']["Arena_Schedules"])
 gladiator_names = open('gladiator_names.txt')
 config_GladiatorNames = [line.rstrip() for line in set(gladiator_names)]
 
-config_Strength = int(config['GLADIATOR']['Strength'])
 config_Gold = int(config['GLADIATOR']['Gold'])
-config_Agility = int(config['GLADIATOR']['Agility'])
-config_Vitality = int(config['GLADIATOR']['Vitality'])
-config_Luck = int(config['GLADIATOR']['Luck'])
+config_GladiatorBaseStat = int(config['GLADIATOR']['Base_Stat'])
+config_GladiatorStatRollRange = int(config['GLADIATOR']['Roll_Range'])
 config_Max_Health = int(config['GLADIATOR']['Max_Health'])
 
 config_GladiatorStrengthLowerDmgRng = 0.25
@@ -33,3 +31,4 @@ config_GladiatorAgilityScalingCritDmg = 1
 config_GladiatorLuckScalingCritDmg = 0.25
 config_GladiatorBaseDodgeChance = 5
 config_GladiatorAgilityScalingDodgeChance = 1
+config_GladiatorVitalityScalingHealth = 0.8

@@ -58,6 +58,12 @@ return a config.GladiatorBaseDodgeChance (implement this!, let's say 5 now) + m_
 * config.GladiatorAgilityScalingDodgeChance (implement this! lets say 1 now)
 
 ---------------------
+
+# get max_health
+
+return a config.GladiatorBaseHealth (implement this!, let's say 400 now) + m_vitality * config.GladiatorVitalityScalingHealth (implement this! lets say 50 now)
+
+---------------------
 # print stats
 
 print all statistics about gladiator in a nice way. Every property and every get we've implemented

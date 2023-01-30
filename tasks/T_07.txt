@@ -1,0 +1,142 @@
+Let's implement some basic console GUI. Upon launching our game, we'd like to get into a menu, from which we
+can decide what we want to do.
+We can implement a separate class in separate file that is going to handle this. Maybe call it GameUI.
+ And maybe it is time to give our game some proper name! Think about that. Replace KULO GAME with your name.
+
+Implement some kind of a header, that is going to show up always after we clear the screen. e.g.:
+
+###################
+#  KULO GAME      #
+###################
+
+// will be always shown at the top of our console, I will leave up to you what is the header going to look like.
+The basic menu we could have right now could be:
+
+###################
+#  KULO GAME      #
+###################
+
+1. Generate New World
+2. Load World
+3. Quit
+
+Enter your choice: ...
+
+// Quit will exit the game
+// If we hit generate new world, clear the console screen, generate header and we should be given a option
+to give it a name (implement this, m_world_name in World class perhaps).
+// Re-use and refactor WorldGenerator appropriately
+
+###################
+#  KULO GAME      #
+###################
+
+Enter world name: ...
+
+// This will create instance of the world with appropriate name. Or if we hit load world, it will load the
+JSON data and return instance of loaded world. If JSON data file is missing or wrong version,
+// warning should be printed out into a console, informing us that something went wrong with loading.
+If we succeed loading or generating new world, our console screen could look like this:
+
+###################
+#  KULO GAME      #
+###################
+
+Welcome to world "m_world_name"!
+Current day is "m_world_day".
+
+1. Simulate world
+2. Save and quit
+
+// Simulate world will prompt us to give a number of days to simulate
+
+###################
+#  KULO GAME      #
+###################
+
+Enter number of days to simulate: ...
+
+// Upon giving a number and pressing enter, we should be given the output with prompts to press enter to return to world menu
+
+###################
+#  KULO GAME      #
+###################
+
+Welcome to world "m_world_name"!
+Current day is "m_world_day". // this should be higher this time
+
+1. Simulate world
+2. Save and quit
+
+// Save and quit will save the world state into JSON and will turn off the game
+
+================================================================================= EXAMPLE AND HINT ===================
+
+I recommend using some kind of 'switch' 
+
+E.g. our gui is always going to be in some state, which could be defined as enum for example.
+GUIState { MenuScreen, WorldScreen } and based on this rendering the text could potentially get easier as:
+
+
+render_screen()
+{
+	if(m_state == GUIState.MenuScreen)
+	{
+		returnVal = render_menu_screen()
+		
+		if returnVal == 1:
+			
+			# generate new world
+			returnVal = render_generate_new_world()
+			m_world = World(str(returnVal))
+			m_state = GUIState.WorldScreen
+			
+			return
+			
+		elif returnVal == 2:
+			
+			# load world
+			....
+			
+		elif returnVal == 3:
+			
+			# end game
+			....
+			
+	}
+	elif m_state == GUIState.WorldScreen
+	{
+		
+		returnVal = render_menu_screen()
+		
+		if returnVal == 1:
+			# simulate world logic...
+			...
+			
+		elif returnVal == 2:
+			#save and end game logic
+	}
+}
+
+render_menu_screen():
+{
+	# clear console screen command
+	os.system('cls')
+	render_header()
+	
+	print "1. Generate New World"
+	....
+	
+	return input()
+}
+
+
+render_header():
+{
+  print "################### \n
+#  KULO GAME      # \n
+###################\n"
+}
+
+while true:
+	render_screen()
