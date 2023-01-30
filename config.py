@@ -31,3 +31,4 @@ config_GladiatorAgilityScalingCritDmg = 1
 config_GladiatorLuckScalingCritDmg = 0.25
 config_GladiatorBaseDodgeChance = 5
 config_GladiatorAgilityScalingDodgeChance = 1
+config_GladiatorVitalityScalingHealth = 0.8
