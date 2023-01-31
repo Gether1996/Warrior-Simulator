@@ -7,7 +7,7 @@ class World(Serializable):
 
     def __init__(self, m_arenas: list = []):
         self.m_arenas = m_arenas
-        self.m_world_name = input("Insert name of the world: ")
+        self.m_world_name = ""
 
     def load_object(self, data):
         self.m_world_name = data["m_world_name"]

@@ -28,6 +28,7 @@ class WorldGenerator:
             arenas.append(arena)
 
         myWorld = World()
+        myWorld.m_world_name = input("Enter world name: ")
         myWorld.m_arenas = arenas
         return myWorld
 
@@ -40,4 +41,5 @@ class WorldGenerator:
                 world.load_object(data_from_json["m_world"])
                 return world
         else:
+            print("World doesn't exists yet!")
             return self.generate_world()
