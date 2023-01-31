@@ -22,7 +22,7 @@ class WorldGenerator:
 
     def generate_world(self):
         arenas = []
-        for x in range(1, 10):
+        for x in range(config_NumOfArenasGenerated):
             arena = Arena()
             arena.generate_default_arena()
             arenas.append(arena)
