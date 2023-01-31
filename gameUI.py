@@ -44,10 +44,8 @@ class RunGame:
         user_input = self.get_input_for_start()
         if user_input == "1":
             myWorld = self.worldGenerator.generate_world()
-            myWorld.m_world_name = input("Enter world name: ")
             os.system('cls')
             self.world = myWorld
-            self.worldGenerator.save_world(myWorld)
             self.second_step()
         elif user_input == "2":
             self.world = self.worldGenerator.load_world()
@@ -70,7 +68,6 @@ class RunGame:
             while int(numOfSimulatedDays) > current_day:
                 self.world.simulate_day()
                 current_day += 1
-            self.worldGenerator.save_world(self.world)
             self.second_step()
 
         elif user_input == "2":
