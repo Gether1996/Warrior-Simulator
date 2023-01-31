@@ -41,5 +41,5 @@ class WorldGenerator:
                 world.load_object(data_from_json["m_world"])
                 return world
         else:
-            print("World doesn't exists yet!")
+            print("World doesn't exist yet!")
             return self.generate_world()
