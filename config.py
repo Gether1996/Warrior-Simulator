@@ -12,6 +12,7 @@ config_NumOfSimulatedDays = int(config['WORLD']['NumOfSimulatedDays'])
 # Arena configurations ################################
 arena_names = open('arena_names.txt')
 config_ListOfArenaNames = [line.rstrip() for line in set(arena_names)]
+config_NumOfArenasGenerated = int(config['ARENA']["NumOfArenasGenerated"])
 config_NumOfArenaSchedules = int(config['ARENA']["Arena_Schedules"])
 config_NumOfArenaGladiators = int(config['ARENA']['NumOfArenaGladiators'])
 
