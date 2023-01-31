@@ -1,10 +1,9 @@
-import os
 from worldGenerator import *
-
+import time
 
 class RunGame:
-
     worldGenerator = WorldGenerator()
+
     def __init__(self, world=...):
         self.world = ...
 
@@ -39,6 +38,14 @@ class RunGame:
         else:
             return user_input
 
+    def get_input_numOfSimulatedDays(self):
+        numOfSimulatedDays = input("Enter number of days to simulate: ")
+        while int(numOfSimulatedDays) > (self.world.m_max_days - self.world.m_worldDay):
+            print(f"Error, maximum days to simulate is {self.world.m_max_days}.")
+            return self.get_input_numOfSimulatedDays()
+        else:
+            return numOfSimulatedDays
+
     def start_game(self):
         self.print_header()
         user_input = self.get_input_for_start()
@@ -46,29 +53,37 @@ class RunGame:
             myWorld = self.worldGenerator.generate_world()
             os.system('cls')
             self.world = myWorld
-            self.second_step()
+            self.world_menu()
         elif user_input == "2":
             self.world = self.worldGenerator.load_world()
             os.system('cls')
-            self.second_step()
+            self.world_menu()
         elif user_input == "3":
             print("\nClosing game.")
             quit()
 
-    def second_step(self):
+    def world_menu(self):
         self.print_header()
         print(f"\n"
               f"Welcome to world {self.world.m_world_name}!\n"
-              f"Current day is {self.world.m_worldDay}.\n")
+              f"Current day is {self.world.m_worldDay} out of {self.world.m_max_days}.\n")
         user_input = self.get_input_for_second()
         if user_input == "1":
-            numOfSimulatedDays = input("Enter number of days to simulate: ")
+            numOfSimulatedDays = self.get_input_numOfSimulatedDays()
             os.system('cls')
             current_day = 0
             while int(numOfSimulatedDays) > current_day:
                 self.world.simulate_day()
                 current_day += 1
-            self.second_step()
+            input("\nPress Enter to run World Menu again...")
+            os.system('cls')
+            if self.world.m_worldDay == self.world.m_max_days:
+                print(f"You have simulated all possible days({self.world.m_max_days}).")
+                time.sleep(3)
+                print("saving game.... BYE BITCH")
+                self.worldGenerator.save_world(self.world)
+                quit()
+            self.world_menu()
 
         elif user_input == "2":
             self.worldGenerator.save_world(self.world)
