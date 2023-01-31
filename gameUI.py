@@ -1,6 +1,7 @@
 from worldGenerator import *
 import time
 
+
 class RunGame:
     worldGenerator = WorldGenerator()
 
@@ -40,9 +41,25 @@ class RunGame:
 
     def get_input_numOfSimulatedDays(self):
         numOfSimulatedDays = input("Enter number of days to simulate: ")
-        while int(numOfSimulatedDays) > (self.world.m_max_days - self.world.m_worldDay):
-            print(f"Error, maximum days to simulate is {self.world.m_max_days}.")
-            return self.get_input_numOfSimulatedDays()
+        if int(numOfSimulatedDays) > (self.world.m_max_days - self.world.m_worldDay):
+            print(f"Error, maximum days you can simulate now is {self.world.m_max_days - self.world.m_worldDay}.")
+            numOfSimulatedDays = input("Enter number of days to simulate: ")
+            if int(numOfSimulatedDays) > (self.world.m_max_days - self.world.m_worldDay):
+                print(f"Error, maximum days you can simulate now is {self.world.m_max_days - self.world.m_worldDay}.")
+                numOfSimulatedDays = input("Enter number of days to simulate: ")
+                if int(numOfSimulatedDays) > (self.world.m_max_days - self.world.m_worldDay):
+                    print(f"Error, last chance to input correct number or the world will save and shut down.")
+                    numOfSimulatedDays = input("Enter number of days to simulate: ")
+                    if int(numOfSimulatedDays) > (self.world.m_max_days - self.world.m_worldDay):
+                        self.worldGenerator.save_world(self.world)
+                        print("\nClosing game.")
+                        quit()
+                    else:
+                        return numOfSimulatedDays
+                else:
+                    return numOfSimulatedDays
+            else:
+                return numOfSimulatedDays
         else:
             return numOfSimulatedDays
 
