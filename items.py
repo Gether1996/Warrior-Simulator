@@ -29,6 +29,9 @@ class Armor(Item):
         self.m_name = data['m_name']
         self.m_armor_value = data['m_armor_value']
 
+    def __str__(self):
+        return self.m_name
+
 
 class ItemManager:
 
@@ -53,5 +56,6 @@ class ItemManager:
             for item in self.m_items:
                 if item.m_item_id == 1:
                     return item.m_name
+
 
 

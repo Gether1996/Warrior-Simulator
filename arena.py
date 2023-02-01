@@ -3,6 +3,7 @@ import random
 from config import *
 from gladiator import Gladiator
 from serializable import Serializable
+from items import ItemManager
 
 Schedule = Enum('Schedule', ['Freeday', 'Recruitment', 'Teamgame', 'Duel', 'Freeforall'])
 
@@ -13,8 +14,10 @@ class Arena(Serializable):
         self.m_arenaSchedule = []
         self.m_arenaName = ""
         self.m_arenaGladiators = []
+        self.m_item_manager = ItemManager()
 
     def generate_default_arena(self):
+        self.m_item_manager.load_items_from_json()
         self.m_arenaGladiators = []
         self.m_arenaSchedule = []
         self.m_arenaName = random.choice(config_ListOfArenaNames)
@@ -23,6 +26,7 @@ class Arena(Serializable):
         for y in range(config_NumOfArenaGladiators):
             gladiator = Gladiator()
             gladiator.generate_default_gladiator()
+            gladiator.m_armor = self.m_item_manager.get_armor_id1_50percent_chance()
             self.m_arenaGladiators.append(gladiator)
 
     def save_object(self):

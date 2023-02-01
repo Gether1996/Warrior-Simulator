@@ -1,14 +1,10 @@
 from math import floor
-from serializable import Serializable
-import random
 from config import *
 from enum import Enum
-from items import ItemManager
+from items import *
 
 Races = Enum('Races', ['Human', 'Elf', 'Dwarf', 'Orc'])
 Traits = [["Strong", "Weak"], ["Nimble", "Sluggish"], ["Vigorous", "Fragile"], ["Blessed", "Unfortunate"]]
-itemManager = ItemManager()
-itemManager.load_items_from_json()
 
 
 class Gladiator(Serializable):
@@ -48,7 +44,6 @@ class Gladiator(Serializable):
         self.add_agility_trait()
         self.add_vitality_trait()
         self.add_luck_trait()
-        self.m_armor = itemManager.get_armor_id1_50percent_chance()
 
     def generate_human(self):
         self.m_strength = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange) \
@@ -182,7 +177,10 @@ class Gladiator(Serializable):
         return x if x <= 100 else 100
 
     def get_armor_value(self):
-        return self.m_armor.m_armor_value
+        armor_value = 0
+        for armor in self.m_armor:
+            armor_value += armor.m_armor_value
+        return armor_value
 
     def print_stats(self):
         return print(f"Stats of Gladiator <> {self.m_name} <>\n"
