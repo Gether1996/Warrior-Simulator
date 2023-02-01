@@ -3,7 +3,7 @@ import configparser
 config = configparser.ConfigParser()
 config.read('config.ini')
 
- ########################### World configurations #################################
+########################### World configurations #################################
 world_names = open('world_names.txt')
 config_ListOfWorldNames = [line.rstrip() for line in set(world_names)]
 config_WorldMaxDays = int(config['WORLD']["World_Max_Days"])
@@ -62,11 +62,14 @@ config_OrcAgilityBonus = int(config['ORC']['Agility'])
 config_OrcVitaliyBonus = int(config['ORC']['Vitality'])
 config_OrcLuckBonus = int(config['ORC']['Luck'])
 
+################################## TRAITS #####################################
+config_GladiatorTraitRollChance = int(config['TRAITS']['Roll_chance'])
 
-
-
-
-
-
-
-
+config_TraitStrengthBonus = int(config['TRAITS']['Strong_effect'])
+config_TraitStrengthPenalty = int(config['TRAITS']['Weak_effect'])
+config_TraitAgilityBonus = int(config['TRAITS']['Nimble_effect'])
+config_TraitAgilityPenalty = int(config['TRAITS']['Sluggish_effect'])
+config_TraitVitalityBonus = int(config['TRAITS']['Vigorous_effect'])
+config_TraitVitalityPenalty = int(config['TRAITS']['Fragile_effect'])
+config_TraitLuckBonus = int(config['TRAITS']['Blessed_effect'])
+config_TraitLuckPenalty = int(config['TRAITS']['Unfortunate_effect'])

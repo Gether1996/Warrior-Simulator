@@ -5,6 +5,7 @@ from config import *
 from enum import Enum
 
 Races = Enum('Races', ['Human', 'Elf', 'Dwarf', 'Orc'])
+Traits = [["Strong", "Weak"], ["Nimble", "Sluggish"], ["Vigorous", "Fragile"], ["Blessed", "Unfortunate"]]
 
 
 class Gladiator(Serializable):
@@ -12,6 +13,7 @@ class Gladiator(Serializable):
     def __init__(self):
         self.m_name = ""
         self.m_race = ...
+        self.m_traits = []
         self.m_strength = ...
         self.m_agility = ...
         self.m_vitality = ...
@@ -38,6 +40,10 @@ class Gladiator(Serializable):
         self.m_max_health = self.get_max_health()
         self.m_current_health = self.get_max_health()
         self.m_gold = config_Gold
+        self.add_strength_trait()
+        self.add_agility_trait()
+        self.add_vitality_trait()
+        self.add_luck_trait()
 
     def generate_human(self):
         self.m_strength = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange) \
@@ -79,10 +85,47 @@ class Gladiator(Serializable):
         self.m_luck = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange) \
                       + config_OrcLuckBonus
 
+    def add_strength_trait(self):
+        if random.randint(1, 100) <= config_GladiatorTraitRollChance:
+            pos_or_neg_trait = random.choice(Traits[0])
+            self.m_traits.append(pos_or_neg_trait)
+            if pos_or_neg_trait == "Strong":
+                self.m_strength += config_TraitStrengthBonus
+            else:
+                self.m_strength += config_TraitStrengthPenalty
+
+    def add_agility_trait(self):
+        if random.randint(1, 100) <= config_GladiatorTraitRollChance:
+            pos_or_neg_trait = random.choice(Traits[1])
+            self.m_traits.append(pos_or_neg_trait)
+            if pos_or_neg_trait == "Nimble":
+                self.m_agility += config_TraitAgilityBonus
+            else:
+                self.m_agility += config_TraitAgilityPenalty
+
+    def add_vitality_trait(self):
+        if random.randint(1, 100) <= config_GladiatorTraitRollChance:
+            pos_or_neg_trait = random.choice(Traits[2])
+            self.m_traits.append(pos_or_neg_trait)
+            if pos_or_neg_trait == "Vigorous":
+                self.m_vitality += config_TraitVitalityBonus
+            else:
+                self.m_vitality += config_TraitVitalityPenalty
+
+    def add_luck_trait(self):
+        if random.randint(1, 100) <= config_GladiatorTraitRollChance:
+            pos_or_neg_trait = random.choice(Traits[3])
+            self.m_traits.append(pos_or_neg_trait)
+            if pos_or_neg_trait == "Blessed":
+                self.m_luck += config_TraitLuckBonus
+            else:
+                self.m_luck += config_TraitLuckPenalty
+
     def save_object(self):
         data = {
             "m_name": self.m_name,
             "m_race": self.m_race,
+            "m_traits": self.m_traits,
             "m_strength": self.m_strength,
             "m_agility": self.m_agility,
             "m_vitality": self.m_vitality,
@@ -96,6 +139,7 @@ class Gladiator(Serializable):
     def load_object(self, data):
         self.m_name = data["m_name"]
         self.m_race = data["m_race"]
+        self.m_traits = data["m_traits"]
         self.m_strength = data["m_strength"]
         self.m_agility = data["m_agility"]
         self.m_vitality = data["m_vitality"]
