@@ -1,0 +1,46 @@
+{
+  "armors": [
+
+      {
+      "m_item_id": 1,
+      "m_type": 2,
+      "m_name": "Wooden Set",
+      "m_armor_value": 5
+      },
+      {
+      "m_item_id": 2,
+      "m_type": 2,
+      "m_name": "Mithril",
+      "m_armor_value": 10
+      },
+      {
+      "m_item_id": 3,
+      "m_type": 2,
+      "m_name": "Theca",
+      "m_armor_value": 20
+      },
+      {
+      "m_item_id": 4,
+      "m_type": 2,
+      "m_name": "Chain Mail",
+      "m_armor_value": 30
+      },
+      {
+      "m_item_id": 5,
+      "m_type": 2,
+      "m_name": "Doom Plate",
+      "m_armor_value": 40
+      },
+      {
+      "m_item_id": 6,
+      "m_type": 2,
+      "m_name": "Tallum Plate",
+      "m_armor_value": 55
+      },
+      {
+      "m_item_id": 7,
+      "m_type": 2,
+      "m_name": "Imperial",
+      "m_armor_value": 70
+      }]
+}

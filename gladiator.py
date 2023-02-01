@@ -3,9 +3,12 @@ from serializable import Serializable
 import random
 from config import *
 from enum import Enum
+from items import ItemManager
 
 Races = Enum('Races', ['Human', 'Elf', 'Dwarf', 'Orc'])
 Traits = [["Strong", "Weak"], ["Nimble", "Sluggish"], ["Vigorous", "Fragile"], ["Blessed", "Unfortunate"]]
+itemManager = ItemManager()
+itemManager.load_items_from_json()
 
 
 class Gladiator(Serializable):
@@ -21,6 +24,7 @@ class Gladiator(Serializable):
         self.m_max_health = ...
         self.m_gold = ...
         self.m_current_health = ...
+        self.m_armor = ...
 
     def pick_random_race(self):
         index = random.randint(1, len(Races))
@@ -44,6 +48,7 @@ class Gladiator(Serializable):
         self.add_agility_trait()
         self.add_vitality_trait()
         self.add_luck_trait()
+        self.m_armor = itemManager.get_armor_id1_50percent_chance()
 
     def generate_human(self):
         self.m_strength = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange) \
@@ -126,6 +131,7 @@ class Gladiator(Serializable):
             "m_name": self.m_name,
             "m_race": self.m_race,
             "m_traits": self.m_traits,
+            "m_armor": self.m_armor,
             "m_strength": self.m_strength,
             "m_agility": self.m_agility,
             "m_vitality": self.m_vitality,
@@ -140,6 +146,7 @@ class Gladiator(Serializable):
         self.m_name = data["m_name"]
         self.m_race = data["m_race"]
         self.m_traits = data["m_traits"]
+        self.m_armor = data["m_armor"]
         self.m_strength = data["m_strength"]
         self.m_agility = data["m_agility"]
         self.m_vitality = data["m_vitality"]
@@ -173,6 +180,9 @@ class Gladiator(Serializable):
     def get_dodge_chance(self):
         x = abs((config_GladiatorBaseDodgeChance + self.m_agility) * config_GladiatorAgilityScalingDodgeChance)
         return x if x <= 100 else 100
+
+    def get_armor_value(self):
+        return self.m_armor.m_armor_value
 
     def print_stats(self):
         return print(f"Stats of Gladiator <> {self.m_name} <>\n"
