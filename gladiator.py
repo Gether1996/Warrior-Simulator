@@ -2,12 +2,16 @@ from math import floor
 from serializable import Serializable
 import random
 from config import *
+from enum import Enum
+
+Races = Enum('Races', ['Human', 'Elf', 'Dwarf', 'Orc'])
 
 
 class Gladiator(Serializable):
 
     def __init__(self):
         self.m_name = ""
+        self.m_race = ...
         self.m_strength = ...
         self.m_agility = ...
         self.m_vitality = ...
@@ -16,19 +20,69 @@ class Gladiator(Serializable):
         self.m_gold = ...
         self.m_current_health = ...
 
+    def pick_random_race(self):
+        index = random.randint(1, len(Races))
+        self.m_race = Races(index).value
+
     def generate_default_gladiator(self):
         self.m_name = random.choice(config_GladiatorNames)
-        self.m_strength = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
-        self.m_agility = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
-        self.m_vitality = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
-        self.m_luck = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
+        self.pick_random_race()
+        if self.m_race == 1:
+            self.generate_human()
+        if self.m_race == 2:
+            self.generate_elf()
+        if self.m_race == 3:
+            self.generate_dwarf()
+        if self.m_race == 4:
+            self.generate_orc()
         self.m_max_health = self.get_max_health()
         self.m_current_health = self.get_max_health()
         self.m_gold = config_Gold
 
+    def generate_human(self):
+        self.m_strength = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange) \
+                          + config_HumanStrengthBonus
+        self.m_agility = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange) \
+                         + config_HumanAgilityBonus
+        self.m_vitality = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange) \
+                          + config_HumanVitaliyBonus
+        self.m_luck = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange) \
+                      + config_HumanLuckBonus
+
+    def generate_elf(self):
+        self.m_strength = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange) \
+                          + config_ElfStrengthBonus
+        self.m_agility = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange) \
+                         + config_ElfAgilityBonus
+        self.m_vitality = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange) \
+                          + config_ElfVitaliyBonus
+        self.m_luck = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange) \
+                      + config_ElfLuckBonus
+
+    def generate_dwarf(self):
+        self.m_strength = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange) \
+                          + config_DwarfStrengthBonus
+        self.m_agility = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange) \
+                         + config_DwarfAgilityBonus
+        self.m_vitality = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange) \
+                          + config_DwarfVitaliyBonus
+        self.m_luck = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange) \
+                      + config_DwarfLuckBonus
+
+    def generate_orc(self):
+        self.m_strength = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange) \
+                          + config_OrcStrengthBonus
+        self.m_agility = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange) \
+                         + config_OrcAgilityBonus
+        self.m_vitality = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange) \
+                          + config_OrcVitaliyBonus
+        self.m_luck = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange) \
+                      + config_OrcLuckBonus
+
     def save_object(self):
         data = {
             "m_name": self.m_name,
+            "m_race": self.m_race,
             "m_strength": self.m_strength,
             "m_agility": self.m_agility,
             "m_vitality": self.m_vitality,
@@ -41,6 +95,7 @@ class Gladiator(Serializable):
 
     def load_object(self, data):
         self.m_name = data["m_name"]
+        self.m_race = data["m_race"]
         self.m_strength = data["m_strength"]
         self.m_agility = data["m_agility"]
         self.m_vitality = data["m_vitality"]
