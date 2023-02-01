@@ -28,85 +28,64 @@ class Gladiator(Serializable):
 
     def generate_default_gladiator(self):
         self.m_name = random.choice(config_GladiatorNames)
-        self.pick_random_race()
         self.m_strength = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
         self.m_agility = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
         self.m_vitality = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
         self.m_luck = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
-        if self.m_race.value == 1:
-            self.generate_human()
-        if self.m_race.value == 2:
-            self.generate_elf()
-        if self.m_race.value == 3:
-            self.generate_dwarf()
-        if self.m_race.value == 4:
-            self.generate_orc()
         self.m_max_health = self.get_max_health()
         self.m_current_health = self.get_max_health()
         self.m_gold = config_Gold
-        self.add_strength_trait()
-        self.add_agility_trait()
-        self.add_vitality_trait()
-        self.add_luck_trait()
 
-    def generate_human(self):
-        self.m_strength += config_HumanStrengthBonus
-        self.m_agility += config_HumanAgilityBonus
-        self.m_vitality += config_HumanVitaliyBonus
-        self.m_luck += config_HumanLuckBonus
+        self.pick_random_race()
+        self.add_stats_based_on_race()
+        self.add_traits()
+        self.add_effects_from_traits()
 
-    def generate_elf(self):
-        self.m_strength += config_ElfStrengthBonus
-        self.m_agility += config_ElfAgilityBonus
-        self.m_vitality += config_ElfVitaliyBonus
-        self.m_luck += config_ElfLuckBonus
+    def add_stats_based_on_race(self):
+        if self.m_race.value == 1:
+            self.m_strength += config_HumanStrengthBonus
+            self.m_agility += config_HumanAgilityBonus
+            self.m_vitality += config_HumanVitaliyBonus
+            self.m_luck += config_HumanLuckBonus
+        if self.m_race.value == 2:
+            self.m_strength += config_ElfStrengthBonus
+            self.m_agility += config_ElfAgilityBonus
+            self.m_vitality += config_ElfVitaliyBonus
+            self.m_luck += config_ElfLuckBonus
+        if self.m_race.value == 3:
+            self.m_strength += config_DwarfStrengthBonus
+            self.m_agility += config_DwarfAgilityBonus
+            self.m_vitality += config_DwarfVitaliyBonus
+            self.m_luck += config_DwarfLuckBonus
+        if self.m_race.value == 4:
+            self.m_strength += config_OrcStrengthBonus
+            self.m_agility += config_OrcAgilityBonus
+            self.m_vitality += config_OrcVitaliyBonus
+            self.m_luck += config_OrcLuckBonus
 
-    def generate_dwarf(self):
-        self.m_strength += config_DwarfStrengthBonus
-        self.m_agility += config_DwarfAgilityBonus
-        self.m_vitality += config_DwarfVitaliyBonus
-        self.m_luck += config_DwarfLuckBonus
+    def add_traits(self):
+        for x in range(0, 3):
+            if random.randint(1, 100) <= config_GladiatorTraitRollChance:
+                trait = random.choice(Traits[x])
+                self.m_traits.append(trait)
 
-    def generate_orc(self):
-        self.m_strength += config_OrcStrengthBonus
-        self.m_agility += config_OrcAgilityBonus
-        self.m_vitality += config_OrcVitaliyBonus
-        self.m_luck += config_OrcLuckBonus
-
-    def add_strength_trait(self):
-        if random.randint(1, 100) <= config_GladiatorTraitRollChance:
-            pos_or_neg_trait = random.choice(Traits[0])
-            self.m_traits.append(pos_or_neg_trait)
-            if pos_or_neg_trait == "Strong":
+    def add_effects_from_traits(self):
+        for trait in self.m_traits:
+            if trait == "Strong":
                 self.m_strength += config_TraitStrengthBonus
-            else:
+            elif trait == "Weak":
                 self.m_strength += config_TraitStrengthPenalty
-
-    def add_agility_trait(self):
-        if random.randint(1, 100) <= config_GladiatorTraitRollChance:
-            pos_or_neg_trait = random.choice(Traits[1])
-            self.m_traits.append(pos_or_neg_trait)
-            if pos_or_neg_trait == "Nimble":
+            elif trait == "Nimble":
                 self.m_agility += config_TraitAgilityBonus
-            else:
+            elif trait == "Sluggish":
                 self.m_agility += config_TraitAgilityPenalty
-
-    def add_vitality_trait(self):
-        if random.randint(1, 100) <= config_GladiatorTraitRollChance:
-            pos_or_neg_trait = random.choice(Traits[2])
-            self.m_traits.append(pos_or_neg_trait)
-            if pos_or_neg_trait == "Vigorous":
+            elif trait == "Vigorous":
                 self.m_vitality += config_TraitVitalityBonus
-            else:
+            elif trait == "Fragile":
                 self.m_vitality += config_TraitVitalityPenalty
-
-    def add_luck_trait(self):
-        if random.randint(1, 100) <= config_GladiatorTraitRollChance:
-            pos_or_neg_trait = random.choice(Traits[3])
-            self.m_traits.append(pos_or_neg_trait)
-            if pos_or_neg_trait == "Blessed":
+            elif trait == "Blessed":
                 self.m_luck += config_TraitLuckBonus
-            else:
+            elif trait == "Unfortunate":
                 self.m_luck += config_TraitLuckPenalty
 
     def save_object(self):

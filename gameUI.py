@@ -27,7 +27,7 @@ class RunGame:
         else:
             return user_input
 
-    def get_input_for_second(self):
+    def get_input_for_menu(self):
         user_input = input("1. Simulate world\n"
                            "2. Save and quit\n"
                            "\n"
@@ -35,7 +35,7 @@ class RunGame:
 
         while user_input not in ["1", "2"]:
             print("\nWrong input! Insert 1 or 2\n")
-            return self.get_input_for_second()
+            return self.get_input_for_menu()
         else:
             return user_input
 
@@ -84,7 +84,7 @@ class RunGame:
         print(f"\n"
               f"Welcome to world {self.world.m_world_name}!\n"
               f"Current day is {self.world.m_worldDay} out of {self.world.m_max_days}.\n")
-        user_input = self.get_input_for_second()
+        user_input = self.get_input_for_menu()
         if user_input == "1":
             numOfSimulatedDays = self.get_input_numOfSimulatedDays()
             os.system('cls')
