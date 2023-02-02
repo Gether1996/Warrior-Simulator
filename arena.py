@@ -24,6 +24,8 @@ class Arena(Serializable):
         for y in range(config_NumOfArenaGladiators):
             gladiator = Gladiator()
             gladiator.generate_default_gladiator()
+            self.m_item_manager.load_items_from_json()
+            gladiator.m_armor = self.m_item_manager.generate_spawning_armor()
             self.m_arenaGladiators.append(gladiator)
 
     def save_object(self):

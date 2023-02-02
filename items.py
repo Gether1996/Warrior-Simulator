@@ -32,11 +32,10 @@ class Armor(Item):
 
     def save_object(self):
         data = {
-            "m_item_id": self.m_item_id,
-            "m_type": self.m_type,
-            "m_name": self.m_name,
             "m_armor_value": self.m_armor_value
         }
+        parentData = super().save_object()
+        data.update(parentData)
         return data
 
     def load_object(self, data):

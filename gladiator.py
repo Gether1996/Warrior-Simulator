@@ -7,7 +7,6 @@ Traits = [["Strong", "Weak"], ["Nimble", "Sluggish"], ["Vigorous", "Fragile"], [
 
 
 class Gladiator(Serializable):
-    itemManager = ItemManager()
 
     def __init__(self):
         self.m_name = ""
@@ -87,8 +86,6 @@ class Gladiator(Serializable):
         self.add_stats_based_on_race()
         self.add_traits()
         self.add_effects_from_traits()
-        self.itemManager.load_items_from_json()
-        self.m_armor = self.itemManager.generate_spawning_armor()
 
     def save_object(self):
         data = {
@@ -118,7 +115,6 @@ class Gladiator(Serializable):
         self.m_gold = data["m_gold"]
 
         self.m_race = Races(data["m_race"])
-        self.itemManager.load_items_from_json()
         armor = Armor()
         armor.load_object(data["m_armor"])
         self.m_armor = armor
