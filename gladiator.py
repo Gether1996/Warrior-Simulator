@@ -152,10 +152,7 @@ class Gladiator(Serializable):
         return x if x <= 100 else 100
 
     def get_armor_value(self):
-        armor_value = 0
-        for armor in self.m_armor:
-            armor_value += armor.m_armor_value
-        return armor_value
+        return self.m_armor.m_armor_value
 
     def print_stats(self):
         return print(f"Stats of Gladiator <> {self.m_name} <>\n"
