@@ -14,3 +14,14 @@ class Schedule(Enum):
     Teamgame = 3
     Duel = 4
     Freeforall = 5
+
+
+class Traits(Enum):
+    Strong = 1
+    Weak = 2
+    Nimble = 3
+    Sluggish = 4
+    Vigorous = 5
+    Fragile = 6
+    Blessed = 7
+    Unfortunate = 8

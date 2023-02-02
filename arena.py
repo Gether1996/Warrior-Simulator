@@ -3,7 +3,7 @@ import random
 from config import *
 from gladiator import Gladiator
 from serializable import Serializable
-from items import ItemManager, Armor
+from items import ItemManager
 
 
 class Arena(Serializable):

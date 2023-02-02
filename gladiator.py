@@ -1,9 +1,7 @@
 from math import floor
 from config import *
-from enums import Races
+from enums import Races, Traits
 from items import *
-
-Traits = [["Strong", "Weak"], ["Nimble", "Sluggish"], ["Vigorous", "Fragile"], ["Blessed", "Unfortunate"]]
 
 
 class Gladiator(Serializable):
@@ -48,28 +46,30 @@ class Gladiator(Serializable):
             self.m_luck += config_OrcLuckBonus
 
     def add_traits(self):
-        for x in range(0, 3):
+        for trait_position_x, trait_position_y in [[1, 2], [3, 4], [5, 6], [7, 8]]:
             if random.randint(1, 100) <= config_GladiatorTraitRollChance:
-                trait = random.choice(Traits[x])
-                self.m_traits.append(trait)
+                if random.randint(1, 100) <= 50:
+                    self.m_traits.append(Traits(trait_position_x))
+                else:
+                    self.m_traits.append(Traits(trait_position_y))
 
     def add_effects_from_traits(self):
         for trait in self.m_traits:
-            if trait == "Strong":
+            if trait.name == "Strong":
                 self.m_strength += config_TraitStrengthBonus
-            elif trait == "Weak":
+            elif trait.name == "Weak":
                 self.m_strength += config_TraitStrengthPenalty
-            elif trait == "Nimble":
+            elif trait.name == "Nimble":
                 self.m_agility += config_TraitAgilityBonus
-            elif trait == "Sluggish":
+            elif trait.name == "Sluggish":
                 self.m_agility += config_TraitAgilityPenalty
-            elif trait == "Vigorous":
+            elif trait.name == "Vigorous":
                 self.m_vitality += config_TraitVitalityBonus
-            elif trait == "Fragile":
+            elif trait.name == "Fragile":
                 self.m_vitality += config_TraitVitalityPenalty
-            elif trait == "Blessed":
+            elif trait.name == "Blessed":
                 self.m_luck += config_TraitLuckBonus
-            elif trait == "Unfortunate":
+            elif trait.name == "Unfortunate":
                 self.m_luck += config_TraitLuckPenalty
 
     def generate_default_gladiator(self):
@@ -91,7 +91,7 @@ class Gladiator(Serializable):
         data = {
             "m_name": self.m_name,
             "m_race": self.m_race.value,
-            "m_traits": self.m_traits,
+            "m_traits": [],
             "m_armor": self.m_armor.save_object(),
             "m_strength": self.m_strength,
             "m_agility": self.m_agility,
@@ -101,11 +101,14 @@ class Gladiator(Serializable):
             "m_current_health": self.m_current_health,
             "m_gold": self.m_gold
         }
+        for trait in self.m_traits:
+            data["m_traits"].append(trait.value)
         return data
 
     def load_object(self, data):
         self.m_name = data["m_name"]
-        self.m_traits = data["m_traits"]
+        for traitData in data["m_traits"]:
+            self.m_traits.append(Traits(traitData))
         self.m_strength = data["m_strength"]
         self.m_agility = data["m_agility"]
         self.m_vitality = data["m_vitality"]
