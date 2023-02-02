@@ -11,7 +11,12 @@ class Item(Serializable):
         self.m_name = ...
 
     def save_object(self):
-        pass
+        data = {
+            "m_item_id": self.m_item_id,
+            "m_type": self.m_type,
+            "m_name": self.m_name
+        }
+        return data
 
     def load_object(self, data):
         self.m_item_id = data['m_item_id']
@@ -24,6 +29,15 @@ class Armor(Item):
     def __init__(self):
         super().__init__()
         self.m_armor_value = ...
+
+    def save_object(self):
+        data = {
+            "m_item_id": self.m_item_id,
+            "m_type": self.m_type,
+            "m_name": self.m_name,
+            "m_armor_value": self.m_armor_value
+        }
+        return data
 
     def load_object(self, data):
         Item.load_object(self, data)
