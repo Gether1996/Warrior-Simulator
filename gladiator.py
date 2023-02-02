@@ -90,7 +90,7 @@ class Gladiator(Serializable):
     def save_object(self):
         data = {
             "m_name": self.m_name,
-            "m_race": self.m_race.name,
+            "m_race": self.m_race.value,
             "m_traits": self.m_traits,
             "m_armor": self.m_armor,
             "m_strength": self.m_strength,
@@ -106,7 +106,7 @@ class Gladiator(Serializable):
     def load_object(self, data):
         self.m_name = data["m_name"]
         raceData = data["m_race"]
-        self.m_race = Races[raceData]
+        self.m_race = Races(raceData)
         self.m_traits = data["m_traits"]
         self.m_armor = data["m_armor"]
         self.m_strength = data["m_strength"]
