@@ -7,6 +7,7 @@ Traits = [["Strong", "Weak"], ["Nimble", "Sluggish"], ["Vigorous", "Fragile"], [
 
 
 class Gladiator(Serializable):
+    itemManager = ItemManager()
 
     def __init__(self):
         self.m_name = ""
@@ -86,13 +87,15 @@ class Gladiator(Serializable):
         self.add_stats_based_on_race()
         self.add_traits()
         self.add_effects_from_traits()
+        self.itemManager.load_items_from_json()
+        self.m_armor = self.itemManager.get_wooden_armor_50percent_chance_else_cloth()
 
     def save_object(self):
         data = {
             "m_name": self.m_name,
             "m_race": self.m_race.value,
             "m_traits": self.m_traits,
-            "m_armor": self.m_armor,
+            "m_armor": self.m_armor.m_name,
             "m_strength": self.m_strength,
             "m_agility": self.m_agility,
             "m_vitality": self.m_vitality,
@@ -108,7 +111,11 @@ class Gladiator(Serializable):
         raceData = data["m_race"]
         self.m_race = Races(raceData)
         self.m_traits = data["m_traits"]
-        self.m_armor = data["m_armor"]
+        self.itemManager.load_items_from_json()
+        armorData = data["m_armor"]
+        for item in self.itemManager.m_items:
+            if item.m_name == armorData:
+                self.m_armor = item
         self.m_strength = data["m_strength"]
         self.m_agility = data["m_agility"]
         self.m_vitality = data["m_vitality"]

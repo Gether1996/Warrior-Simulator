@@ -51,11 +51,12 @@ class ItemManager:
             if item.m_item_id == m_item_id:
                 return item.m_name
 
-    def get_armor_id1_50percent_chance(self):
+    def get_wooden_armor_50percent_chance_else_cloth(self):
         if random.randint(1, 100) <= 50:
             for item in self.m_items:
+                if item.m_item_id == 2:
+                    return item
+        else:
+            for item in self.m_items:
                 if item.m_item_id == 1:
-                    return item.m_name
-
-
-
+                    return item

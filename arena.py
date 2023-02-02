@@ -3,7 +3,7 @@ import random
 from config import *
 from gladiator import Gladiator
 from serializable import Serializable
-from items import ItemManager
+from items import ItemManager, Armor
 
 
 class Arena(Serializable):
@@ -24,7 +24,6 @@ class Arena(Serializable):
         for y in range(config_NumOfArenaGladiators):
             gladiator = Gladiator()
             gladiator.generate_default_gladiator()
-            gladiator.m_armor = self.m_item_manager.get_armor_id1_50percent_chance()
             self.m_arenaGladiators.append(gladiator)
 
     def save_object(self):
