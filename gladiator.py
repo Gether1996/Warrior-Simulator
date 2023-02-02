@@ -88,7 +88,7 @@ class Gladiator(Serializable):
         self.add_traits()
         self.add_effects_from_traits()
         self.itemManager.load_items_from_json()
-        self.m_armor = self.itemManager.get_wooden_armor_50percent_chance_else_cloth()
+        self.m_armor = self.itemManager.generate_spawning_armor()
 
     def save_object(self):
         data = {

@@ -14,7 +14,9 @@ class Item(Serializable):
         pass
 
     def load_object(self, data):
-        pass
+        self.m_item_id = data['m_item_id']
+        self.m_type = data['m_type']
+        self.m_name = data['m_name']
 
 
 class Armor(Item):
@@ -24,9 +26,7 @@ class Armor(Item):
         self.m_armor_value = ...
 
     def load_object(self, data):
-        self.m_item_id = data['m_item_id']
-        self.m_type = data['m_type']
-        self.m_name = data['m_name']
+        Item.load_object(self, data)
         self.m_armor_value = data['m_armor_value']
 
     def __str__(self):
@@ -51,7 +51,7 @@ class ItemManager:
             if item.m_item_id == m_item_id:
                 return item.m_name
 
-    def get_wooden_armor_50percent_chance_else_cloth(self):
+    def generate_spawning_armor(self):
         if random.randint(1, 100) <= 50:
             for item in self.m_items:
                 if item.m_item_id == 2:
