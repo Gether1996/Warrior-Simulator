@@ -108,14 +108,7 @@ class Gladiator(Serializable):
 
     def load_object(self, data):
         self.m_name = data["m_name"]
-        raceData = data["m_race"]
-        self.m_race = Races(raceData)
         self.m_traits = data["m_traits"]
-        self.itemManager.load_items_from_json()
-        armorData = data["m_armor"]
-        for item in self.itemManager.m_items:
-            if item.m_name == armorData:
-                self.m_armor = item
         self.m_strength = data["m_strength"]
         self.m_agility = data["m_agility"]
         self.m_vitality = data["m_vitality"]
@@ -123,6 +116,14 @@ class Gladiator(Serializable):
         self.m_max_health = data["m_max_health"]
         self.m_current_health = data["m_current_health"]
         self.m_gold = data["m_gold"]
+
+        raceData = data["m_race"]
+        self.m_race = Races(raceData)
+        self.itemManager.load_items_from_json()
+        armorData = data["m_armor"]
+        for item in self.itemManager.m_items:
+            if item.m_name == armorData:
+                self.m_armor = item
 
     def get_damage_range(self):
         low = floor(self.m_strength * config_GladiatorStrengthLowerDmgRng)
