@@ -74,5 +74,5 @@ config_TraitVitalityPenalty = int(config['TRAITS']['Fragile_effect'])
 config_TraitLuckBonus = int(config['TRAITS']['Blessed_effect'])
 config_TraitLuckPenalty = int(config['TRAITS']['Unfortunate_effect'])
 
-################################## TRAITS #####################################
+################################## ITEMS #####################################
 config_MaximumArmorReduction = int(config['ITEMS']['Maximum_armor_reduction'])
