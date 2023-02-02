@@ -1,11 +1,9 @@
-from enum import Enum
+from enums import Schedule
 import random
 from config import *
 from gladiator import Gladiator
 from serializable import Serializable
 from items import ItemManager
-
-Schedule = Enum('Schedule', ['Freeday', 'Recruitment', 'Teamgame', 'Duel', 'Freeforall'])
 
 
 class Arena(Serializable):

@@ -1,9 +1,8 @@
 from math import floor
 from config import *
-from enum import Enum
+from enums import Races
 from items import *
 
-Races = Enum('Races', ['Human', 'Elf', 'Dwarf', 'Orc'])
 Traits = [["Strong", "Weak"], ["Nimble", "Sluggish"], ["Vigorous", "Fragile"], ["Blessed", "Unfortunate"]]
 
 
@@ -25,21 +24,6 @@ class Gladiator(Serializable):
     def pick_random_race(self):
         index = random.randint(1, len(Races))
         self.m_race = Races(index)
-
-    def generate_default_gladiator(self):
-        self.m_name = random.choice(config_GladiatorNames)
-        self.m_strength = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
-        self.m_agility = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
-        self.m_vitality = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
-        self.m_luck = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
-        self.m_max_health = self.get_max_health()
-        self.m_current_health = self.get_max_health()
-        self.m_gold = config_Gold
-
-        self.pick_random_race()
-        self.add_stats_based_on_race()
-        self.add_traits()
-        self.add_effects_from_traits()
 
     def add_stats_based_on_race(self):
         if self.m_race.value == 1:
@@ -88,6 +72,21 @@ class Gladiator(Serializable):
             elif trait == "Unfortunate":
                 self.m_luck += config_TraitLuckPenalty
 
+    def generate_default_gladiator(self):
+        self.m_name = random.choice(config_GladiatorNames)
+        self.m_strength = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
+        self.m_agility = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
+        self.m_vitality = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
+        self.m_luck = config_GladiatorBaseStat + random.randint(0, config_GladiatorStatRollRange)
+        self.m_max_health = self.get_max_health()
+        self.m_current_health = self.get_max_health()
+        self.m_gold = config_Gold
+
+        self.pick_random_race()
+        self.add_stats_based_on_race()
+        self.add_traits()
+        self.add_effects_from_traits()
+
     def save_object(self):
         data = {
             "m_name": self.m_name,
@@ -106,7 +105,8 @@ class Gladiator(Serializable):
 
     def load_object(self, data):
         self.m_name = data["m_name"]
-        self.m_race = data["m_race"]
+        raceData = data["m_race"]
+        self.m_race = Races[raceData]
         self.m_traits = data["m_traits"]
         self.m_armor = data["m_armor"]
         self.m_strength = data["m_strength"]
