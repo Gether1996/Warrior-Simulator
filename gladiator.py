@@ -46,12 +46,17 @@ class Gladiator(Serializable):
             self.m_luck += config_OrcLuckBonus
 
     def add_traits(self):
-        for trait_position_x, trait_position_y in [[1, 2], [3, 4], [5, 6], [7, 8]]:
+        traitPairs = []
+        for traitIndex in range(len(Traits)):
+            if traitIndex % 2 == 1:
+                traitPairs.append(([traitIndex, traitIndex + 1]))
+
+        for traitItemA, traitItemB in traitPairs:
             if random.randint(1, 100) <= config_GladiatorTraitRollChance:
                 if random.randint(1, 100) <= 50:
-                    self.m_traits.append(Traits(trait_position_x))
+                    self.m_traits.append(Traits(traitItemA))
                 else:
-                    self.m_traits.append(Traits(trait_position_y))
+                    self.m_traits.append(Traits(traitItemB))
 
     def add_effects_from_traits(self):
         for trait in self.m_traits:
