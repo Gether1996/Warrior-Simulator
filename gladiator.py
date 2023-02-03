@@ -18,6 +18,7 @@ class Gladiator(Serializable):
         self.m_gold = ...
         self.m_current_health = ...
         self.m_armor = ...
+        self.m_weapon = ...
 
     def pick_random_race(self):
         index = random.randint(1, len(Races))
@@ -98,6 +99,7 @@ class Gladiator(Serializable):
             "m_race": self.m_race.value,
             "m_traits": [],
             "m_armor": self.m_armor.save_object(),
+            "m_weapon": self.m_weapon.save_object(),
             "m_strength": self.m_strength,
             "m_agility": self.m_agility,
             "m_vitality": self.m_vitality,
@@ -126,11 +128,18 @@ class Gladiator(Serializable):
         armor = Armor()
         armor.load_object(data["m_armor"])
         self.m_armor = armor
+        weapon = Weapon()
+        weapon.load_object(data["m_weapon"])
+        self.m_weapon = weapon
 
     def get_damage_range(self):
-        low = floor(self.m_strength * config_GladiatorStrengthLowerDmgRng)
-        top = floor(self.m_strength * config_GladiatorStrengthUpperDmgRng)
-        return (low, top) if top > 1 else (0, 1)
+        base_damage_lower = floor(self.m_strength * config_GladiatorStrengthLowerDmgRng)
+        base_damage_upper = floor(self.m_strength * config_GladiatorStrengthUpperDmgRng)
+        weapon_damage_scaled_lower = [1 + self.m_strength * 0.05] * self.m_weapon.m_damage_lower
+        weapon_damage_scaled_upper = [1 + self.m_strength * 0.05] * self.m_weapon.m_damage_upper
+        lower_total = base_damage_lower + weapon_damage_scaled_lower
+        upper_total = base_damage_upper + weapon_damage_scaled_upper
+        return (lower_total, upper_total) if upper_total > 1 else (0, 1)
 
     def get_hit_chance(self):
         x = (config_GladiatorBaseHitChance + self.m_agility) * config_GladiatorAgilityScalingHitChance
@@ -164,7 +173,7 @@ class Gladiator(Serializable):
                      f"      Vitality: {self.m_vitality}\n"
                      f"       Luck: {self.m_luck}\n"
                      f"        Gold: {self.m_gold}\n"
-                     f"         Damage range: {self.get_damage_range()}\n"
+                     f"         Damage range: {self.get_base_damage_range()}\n"
                      f"        Hit chance: {self.get_hit_chance()}\n"
                      f"       Crit chance: {self.get_crit_chance()}\n"
                      f"      Crit damage: {self.get_crit_scale()}\n"

@@ -25,6 +25,7 @@ class Arena(Serializable):
             gladiator = Gladiator()
             gladiator.generate_default_gladiator()
             gladiator.m_armor = self.m_item_manager.generate_spawning_armor()
+            gladiator.m_weapon = self.m_item_manager.add_random_weapon_kek()
             self.m_arenaGladiators.append(gladiator)
 
     def save_object(self):

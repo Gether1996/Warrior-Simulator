@@ -42,8 +42,27 @@ class Armor(Item):
         Item.load_object(self, data)
         self.m_armor_value = data['m_armor_value']
 
-    def __str__(self):
-        return self.m_name
+
+class Weapon(Item):
+
+    def __init__(self):
+        super().__init__()
+        self.m_damage_lower = ...
+        self.m_damage_upper = ...
+
+    def save_object(self):
+        data = {
+            "m_damage_lower": self.m_damage_lower,
+            "m_damage_upper": self.m_damage_upper
+        }
+        parentData = super().save_object()
+        data.update(parentData)
+        return data
+
+    def load_object(self, data):
+        Item.load_object(self, data)
+        self.m_damage_lower = data['m_damage_lower']
+        self.m_damage_upper = data['m_damage_upper']
 
 
 class ItemManager:
@@ -53,11 +72,18 @@ class ItemManager:
 
     def load_items_from_json(self):
         f = open('armors.json')
-        data_from_json = json.loads(f.read())
-        for itemData in data_from_json['armors']:
+        armor_data_from_json = json.loads(f.read())
+        for itemData in armor_data_from_json['armors']:
             armor = Armor()
             armor.load_object(itemData)
             self.m_items.append(armor)
+
+        g = open('weapons.json')
+        weapon_data_from_json = json.loads(g.read())
+        for itemData in weapon_data_from_json['weapons']:
+            weapon = Weapon()
+            weapon.load_object(itemData)
+            self.m_items.append(weapon)
 
     def get_item_name_by_its_id(self, m_item_id):
         for item in self.m_items:
@@ -73,3 +99,7 @@ class ItemManager:
             for item in self.m_items:
                 if item.m_item_id == 1:
                     return item
+
+    def add_random_weapon_kek(self):
+        random_wep = random.choice(self.m_items[8:])
+        return random_wep
