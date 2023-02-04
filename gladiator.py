@@ -17,8 +17,8 @@ class Gladiator(Serializable):
         self.m_max_health = ...
         self.m_gold = ...
         self.m_current_health = ...
-        self.m_armor = ...
-        self.m_weapon = ...
+        self.m_armor = None
+        self.m_weapon = None
 
     def pick_random_race(self):
         index = random.randint(1, len(Races))
@@ -98,8 +98,8 @@ class Gladiator(Serializable):
             "m_name": self.m_name,
             "m_race": self.m_race.value,
             "m_traits": [],
-            "m_armor": self.m_armor.save_object(),
-            "m_weapon": self.m_weapon.save_object(),
+            "m_armor": ...,
+            "m_weapon": ...,
             "m_strength": self.m_strength,
             "m_agility": self.m_agility,
             "m_vitality": self.m_vitality,
@@ -110,6 +110,14 @@ class Gladiator(Serializable):
         }
         for trait in self.m_traits:
             data["m_traits"].append(trait.value)
+        if self.m_armor is None:
+            data["m_armor"] = None
+        else:
+            data["m_armor"] = self.m_armor.save_object()
+        if self.m_weapon is None:
+            data["m_weapon"] = None
+        else:
+            data["m_weapon"] = self.m_weapon.save_object()
         return data
 
     def load_object(self, data):
@@ -123,14 +131,21 @@ class Gladiator(Serializable):
         self.m_max_health = data["m_max_health"]
         self.m_current_health = data["m_current_health"]
         self.m_gold = data["m_gold"]
-
         self.m_race = Races(data["m_race"])
-        armor = Armor()
-        armor.load_object(data["m_armor"])
-        self.m_armor = armor
-        weapon = Weapon()
-        weapon.load_object(data["m_weapon"])
-        self.m_weapon = weapon
+
+        if data["m_armor"] is None:
+            self.m_armor = None
+        else:
+            armor = Armor()
+            armor.load_object(data["m_armor"])
+            self.m_armor = armor
+
+        if data["m_weapon"] is None:
+            self.m_weapon = None
+        else:
+            weapon = Weapon()
+            weapon.load_object(data["m_weapon"])
+            self.m_weapon = weapon
 
     def get_damage_range(self):
         base_damage_lower = floor(self.m_strength * config_GladiatorStrengthLowerDmgRng)
@@ -173,7 +188,7 @@ class Gladiator(Serializable):
                      f"      Vitality: {self.m_vitality}\n"
                      f"       Luck: {self.m_luck}\n"
                      f"        Gold: {self.m_gold}\n"
-                     f"         Damage range: {self.get_base_damage_range()}\n"
+                     f"         Damage range: {self.get_damage_range()}\n"
                      f"        Hit chance: {self.get_hit_chance()}\n"
                      f"       Crit chance: {self.get_crit_chance()}\n"
                      f"      Crit damage: {self.get_crit_scale()}\n"

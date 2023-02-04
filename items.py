@@ -90,16 +90,14 @@ class ItemManager:
             if item.m_item_id == m_item_id:
                 return item.m_name
 
-    def generate_spawning_armor(self):
+    def generate_spawning_armor_wooden(self):
         if random.randint(1, 100) <= 50:
             for item in self.m_items:
                 if item.m_item_id == 2:
                     return item
-        else:
-            for item in self.m_items:
-                if item.m_item_id == 1:
-                    return item
 
-    def add_random_weapon_kek(self):
-        random_wep = random.choice(self.m_items[8:])
-        return random_wep
+    def generate_spawning_weapon_falchion(self):
+        if random.randint(1, 100) <= 50:
+            for item in self.m_items:
+                if item.m_item_id == 9:
+                    return item
