@@ -94,6 +94,8 @@ class Gladiator(Serializable):
         self.add_stats_based_on_race()
         self.add_traits()
         self.add_effects_from_traits()
+        gladiatorStatistics = GladiatorStatistics()
+        self.m_GladiatorStatistics = gladiatorStatistics
 
     def save_object(self):
         data = {
@@ -121,8 +123,7 @@ class Gladiator(Serializable):
             data["m_weapon"] = None
         else:
             data["m_weapon"] = self.m_weapon.save_object()
-        gladiatorStatistics = GladiatorStatistics()
-        data["m_gladiator_statistics"] = gladiatorStatistics.save_object()
+        data["m_gladiator_statistics"] = self.m_GladiatorStatistics.save_object()
         return data
 
     def load_object(self, data):
@@ -151,8 +152,8 @@ class Gladiator(Serializable):
             weapon = Weapon()
             weapon.load_object(data["m_weapon"])
             self.m_weapon = weapon
-        gladiatorStatistics = GladiatorStatistics()
-        self.m_GladiatorStatistics = gladiatorStatistics.load_object(data["m_gladiator_statistics"])
+        self.m_GladiatorStatistics = GladiatorStatistics()
+        self.m_GladiatorStatistics.load_object(data["m_gladiator_statistics"])
 
     def get_damage_range(self):
         base_damage_lower = floor(self.m_strength * config_GladiatorStrengthLowerDmgRng)
@@ -187,16 +188,17 @@ class Gladiator(Serializable):
     def get_armor_value(self):
         return self.m_armor.m_armor_value
 
-    def print_stats(self):
-        return print(f"Stats of Gladiator <> {self.m_name} <>\n"
-                     f"  Current health {self.m_current_health} of maximum {self.get_max_health()}\n"
-                     f"    Strength: {self.m_strength}\n"
-                     f"     Agility: {self.m_agility}\n"
-                     f"      Vitality: {self.m_vitality}\n"
-                     f"       Luck: {self.m_luck}\n"
-                     f"        Gold: {self.m_gold}\n"
-                     f"         Damage range: {self.get_damage_range()}\n"
-                     f"        Hit chance: {self.get_hit_chance()}\n"
-                     f"       Crit chance: {self.get_crit_chance()}\n"
-                     f"      Crit damage: {self.get_crit_scale()}\n"
-                     f"     Dodge chance: {self.get_dodge_chance()}\n")
+    def print_gladiator(self):
+        print(f"Stats of Gladiator <> {self.m_name} <>\n"
+              f"  Current health {self.m_current_health} of maximum {self.get_max_health()}\n"
+              f"    Strength: {self.m_strength}\n"
+              f"     Agility: {self.m_agility}\n"
+              f"      Vitality: {self.m_vitality}\n"
+              f"       Luck: {self.m_luck}\n"
+              f"        Gold: {self.m_gold}\n"
+              f"         Damage range: {self.get_damage_range()}\n"
+              f"          Hit chance: {self.get_hit_chance()}\n"
+              f"           Crit chance: {self.get_crit_chance()}\n"
+              f"            Crit damage: {self.get_crit_scale()}\n"
+              f"             Dodge chance: {self.get_dodge_chance()}\n")
+        self.m_GladiatorStatistics.print_gladiator_statistics()

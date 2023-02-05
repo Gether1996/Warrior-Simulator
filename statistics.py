@@ -45,3 +45,15 @@ class GladiatorStatistics(Serializable):
         self.m_highest_single_blow_damage = data["m_highest_single_blow_damage"]
         self.m_total_finishing_blows = data["m_total_finishing_blows"]
 
+    def print_gladiator_statistics(self):
+        print(f"FAME: {self.m_fame}\n"
+              f" 1v1 victories: {self.m_num_of_1v1_victories}\n"
+              f"  1v1 matches: {self.m_num_of_1v1_matches}\n"
+              f"   FFA victories: {self.m_num_of_FFA_victories}\n"
+              f"    FFA matches: {self.m_num_of_FFA_matches}\n"
+              f"     Team victories: {self.m_num_of_team_victories}\n"
+              f"      Team matches: {self.m_num_of_team_matches}\n"
+              f"       Total damage done: {self.m_total_damage_done}\n"
+              f"        Total damage avoided: {self.m_total_damage_avoided}\n"
+              f"         Total finishing blows: {self.m_total_finishing_blows}\n"
+              f"          Highest single blow: {self.m_highest_single_blow_damage}")
