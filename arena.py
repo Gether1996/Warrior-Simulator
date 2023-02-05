@@ -4,6 +4,7 @@ from config import *
 from gladiator import Gladiator
 from serializable import Serializable
 from items import ItemManager
+from statistics import ArenaStatistics
 
 
 class Arena(Serializable):
@@ -13,6 +14,7 @@ class Arena(Serializable):
         self.m_arenaName = ""
         self.m_arenaGladiators = []
         self.m_item_manager = ItemManager()
+        self.m_arena_statistics = ArenaStatistics()
 
     def generate_default_arena(self):
         self.m_item_manager.load_items_from_json()
@@ -32,6 +34,7 @@ class Arena(Serializable):
         data = {
             "m_arenaName": self.m_arenaName,
             "m_arenaSchedule": [],
+            "m_arena_statistics": self.m_arena_statistics.save_object(),
             "m_arenaGladiators": []
         }
         for x in self.m_arenaSchedule:
@@ -48,6 +51,8 @@ class Arena(Serializable):
             gladiator = Gladiator()
             gladiator.load_object(gladiatorData)
             self.m_arenaGladiators.append(gladiator)
+        self.m_arena_statistics = ArenaStatistics()
+        self.m_arena_statistics.load_object(data["m_arena_statistics"])
 
     def fill_schedule(self):
         self.m_arenaSchedule.pop(0)

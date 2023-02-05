@@ -111,7 +111,7 @@ class Gladiator(Serializable):
             "m_max_health": self.m_max_health,
             "m_current_health": self.m_current_health,
             "m_gold": self.m_gold,
-            "m_gladiator_statistics": ...
+            "m_gladiator_statistics": self.m_GladiatorStatistics.save_object()
         }
         for trait in self.m_traits:
             data["m_traits"].append(trait.value)
@@ -123,7 +123,6 @@ class Gladiator(Serializable):
             data["m_weapon"] = None
         else:
             data["m_weapon"] = self.m_weapon.save_object()
-        data["m_gladiator_statistics"] = self.m_GladiatorStatistics.save_object()
         return data
 
     def load_object(self, data):
