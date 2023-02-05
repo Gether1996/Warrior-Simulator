@@ -2,6 +2,7 @@ from math import floor
 from config import *
 from enums import Races, Traits
 from items import *
+from statistics import GladiatorStatistics
 
 
 class Gladiator(Serializable):
@@ -19,6 +20,7 @@ class Gladiator(Serializable):
         self.m_current_health = ...
         self.m_armor = None
         self.m_weapon = None
+        self.m_GladiatorStatistics = ...
 
     def pick_random_race(self):
         index = random.randint(1, len(Races))
@@ -106,7 +108,8 @@ class Gladiator(Serializable):
             "m_luck": self.m_luck,
             "m_max_health": self.m_max_health,
             "m_current_health": self.m_current_health,
-            "m_gold": self.m_gold
+            "m_gold": self.m_gold,
+            "m_gladiator_statistics": ...
         }
         for trait in self.m_traits:
             data["m_traits"].append(trait.value)
@@ -118,6 +121,8 @@ class Gladiator(Serializable):
             data["m_weapon"] = None
         else:
             data["m_weapon"] = self.m_weapon.save_object()
+        gladiatorStatistics = GladiatorStatistics()
+        data["m_gladiator_statistics"] = gladiatorStatistics.save_object()
         return data
 
     def load_object(self, data):
@@ -146,6 +151,8 @@ class Gladiator(Serializable):
             weapon = Weapon()
             weapon.load_object(data["m_weapon"])
             self.m_weapon = weapon
+        gladiatorStatistics = GladiatorStatistics()
+        self.m_GladiatorStatistics = gladiatorStatistics.load_object(data["m_gladiator_statistics"])
 
     def get_damage_range(self):
         base_damage_lower = floor(self.m_strength * config_GladiatorStrengthLowerDmgRng)
