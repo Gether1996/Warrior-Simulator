@@ -29,6 +29,10 @@ class Arena(Serializable):
             gladiator.m_armor = self.m_item_manager.generate_spawning_armor_wooden()
             gladiator.m_weapon = self.m_item_manager.generate_spawning_weapon_falchion()
             self.m_arenaGladiators.append(gladiator)
+        arena_fame = 0
+        for gladiator in self.m_arenaGladiators:
+            arena_fame += gladiator.m_GladiatorStatistics.m_gladiator_fame
+        self.m_arena_statistics.m_arena_fame = arena_fame
 
     def save_object(self):
         data = {
@@ -73,4 +77,29 @@ class Arena(Serializable):
         self.m_arenaSchedule.append(Schedule(index))
 
     def __str__(self):
-        return f"Name of this arena: {self.m_arenaName}"
+        return f"{self.m_arenaName}"
+
+    def glad_with_most_fame(self):
+        glad = Gladiator()
+        for gladiator in self.m_arenaGladiators:
+            if gladiator.m_GladiatorStatistics.m_gladiator_fame > glad.m_GladiatorStatistics.m_gladiator_fame:
+                glad = gladiator
+        return glad
+
+    def glad_with_most_matches(self):
+        glad = Gladiator()
+        glad.m_GladiatorStatistics.m_total_matches = 0
+        for gladiator in self.m_arenaGladiators:
+            if gladiator.m_GladiatorStatistics.m_total_matches > \
+                    glad.m_GladiatorStatistics.m_total_matches:
+                glad = gladiator
+        return glad
+
+    def current_num_of_gladiators_in_arena(self):
+        return len(self.m_arenaGladiators)
+
+    def sum_of_gladiators_fame_in_arena(self):
+        summary = 0
+        for gladiator in self.m_arenaGladiators:
+            summary += gladiator.m_GladiatorStatistics.m_gladiator_fame
+        return summary

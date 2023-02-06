@@ -42,3 +42,99 @@ class World(Serializable):
                 t.progress_day()
 
             self.m_worldDay += 1
+
+    def print_world_statistics(self):
+        print("=====================================================================\n"
+              "\n"
+              "=====                        HALL OF FAME                       =====\n"
+              "\n"
+              "=====================================================================\n"
+              "\n"
+              "")
+        self.print_arena_with_best_fame()
+        print("\n")
+        self.print_glad_with_most_matches_from_arena()
+        print("\n")
+        self.print_glad_with_most_fame_from_arena()
+        print("\n"
+              "############################ HONORABLE MENTIONS ############################\n")
+        self.print_glad_with_highest_total_dmg_done()
+        self.print_glad_with_highest_total_dmg_avoided()
+        self.print_glad_with_most_finishing_blows()
+        self.print_glad_with_highest_single_blow_delivered()
+
+    def print_arena_with_best_fame(self):
+        best_arena = Arena()
+        best_arena.m_arena_statistics.m_arena_fame = 0
+        for arena in self.m_arenas:
+            if arena.m_arena_statistics.m_arena_fame > best_arena.m_arena_statistics.m_arena_fame:
+                best_arena = arena
+        print(f"°°°°°°°°°°°      Arena with highest fame: {best_arena}      ")
+
+    def print_glad_with_most_matches_from_arena(self):
+        best_glad = Gladiator()
+        best_glad.m_GladiatorStatistics.m_total_matches = 0
+        best_arena = Arena()
+        for arena in self.m_arenas:
+            for gladiator in arena.m_arenaGladiators:
+                if gladiator.m_GladiatorStatistics.m_total_matches > \
+                        best_glad.m_GladiatorStatistics.m_total_matches:
+                    best_glad = gladiator
+                    best_arena = arena
+        print(f"°°°°°°°°°°°      Gladiator with most matches: {best_glad} !\n"
+              f"°°°°°°°°°°°      Coming from arena: {best_arena} !\n")
+
+    def print_glad_with_most_fame_from_arena(self):
+        best_glad = Gladiator()
+        best_glad.m_GladiatorStatistics.m_gladiator_fame = 0
+        best_arena = Arena()
+        for arena in self.m_arenas:
+            for gladiator in arena.m_arenaGladiators:
+                if gladiator.m_GladiatorStatistics.m_gladiator_fame > best_glad.m_GladiatorStatistics.m_gladiator_fame:
+                    best_glad = gladiator
+                    best_arena = arena
+        print(f"°°°°°°°°°°°      Gladiator with most fame: {best_glad} !\n"
+              f"°°°°°°°°°°°      Coming from arena: {best_arena} !\n")
+
+    def print_glad_with_highest_total_dmg_done(self):
+        best_glad = Gladiator()
+        best_glad.m_GladiatorStatistics.m_total_damage_done = 0
+        for arena in self.m_arenas:
+            for gladiator in arena.m_arenaGladiators:
+                if gladiator.m_GladiatorStatistics.m_total_damage_done > \
+                        best_glad.m_GladiatorStatistics.m_total_damage_done:
+                    best_glad = gladiator
+        print(f"Gladiator with the highest total damage done: {best_glad} !")
+
+    def print_glad_with_highest_total_dmg_avoided(self):
+        best_glad = Gladiator()
+        best_glad.m_GladiatorStatistics.m_total_damage_avoided = 0
+        for arena in self.m_arenas:
+            for gladiator in arena.m_arenaGladiators:
+                if gladiator.m_GladiatorStatistics.m_total_damage_avoided > \
+                        best_glad.m_GladiatorStatistics.m_total_damage_avoided:
+                    best_glad = gladiator
+        print(f"Gladiator with the highest total damage avoided: {best_glad} !")
+
+    def print_glad_with_most_finishing_blows(self):
+        best_glad = Gladiator()
+        best_glad.m_GladiatorStatistics.m_total_finishing_blows = 0
+        for arena in self.m_arenas:
+            for gladiator in arena.m_arenaGladiators:
+                if gladiator.m_GladiatorStatistics.m_total_finishing_blows > \
+                        best_glad.m_GladiatorStatistics.m_total_finishing_blows:
+                    best_glad = gladiator
+        print(f"Gladiator with the most finishing blows: {best_glad} !")
+
+    def print_glad_with_highest_single_blow_delivered(self):
+        best_glad = Gladiator()
+        best_glad.m_GladiatorStatistics.m_highest_single_blow_damage = 0
+        for arena in self.m_arenas:
+            for gladiator in arena.m_arenaGladiators:
+                if gladiator.m_GladiatorStatistics.m_highest_single_blow_damage > \
+                        best_glad.m_GladiatorStatistics.m_highest_single_blow_damage:
+                    best_glad = gladiator
+        print(f"Gladiator with the highest single blow damage delivered: {best_glad} !")
+
+    def print_glad_with_highest_avg_dmg(self):
+        pass  # TODO

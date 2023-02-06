@@ -30,11 +30,12 @@ class RunGame:
     def get_input_for_menu(self):
         user_input = input("1. Simulate world\n"
                            "2. Save and quit\n"
+                           "3. Show statistics\n"
                            "\n"
                            "Enter your choice: ")
 
-        while user_input not in ["1", "2"]:
-            print("\nWrong input! Insert 1 or 2\n")
+        while user_input not in ["1", "2", "3"]:
+            print("\nWrong input! Insert 1, 2 or 3\n")
             return self.get_input_for_menu()
         else:
             return user_input
@@ -106,3 +107,10 @@ class RunGame:
             self.worldGenerator.save_world(self.world)
             print("\nClosing game.")
             quit()
+
+        elif user_input == "3":
+            os.system('cls')
+            self.world.print_world_statistics()
+            input("\nPress Enter to run World Menu again...")
+            os.system('cls')
+            self.world_menu()

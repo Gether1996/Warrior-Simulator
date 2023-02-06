@@ -20,7 +20,10 @@ class Gladiator(Serializable):
         self.m_current_health = ...
         self.m_armor = None
         self.m_weapon = None
-        self.m_GladiatorStatistics = ...
+        self.m_GladiatorStatistics = GladiatorStatistics
+
+    def __str__(self):
+        return self.m_name
 
     def pick_random_race(self):
         index = random.randint(1, len(Races))
