@@ -111,6 +111,7 @@ class RunGame:
         elif user_input == "3":
             os.system('cls')
             self.world.print_world_statistics()
+            self.world.save_stats_into_txt()
             input("\nPress Enter to run World Menu again...")
             os.system('cls')
             self.world_menu()
