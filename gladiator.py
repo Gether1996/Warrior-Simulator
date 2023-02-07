@@ -20,7 +20,7 @@ class Gladiator(Serializable):
         self.m_current_health = ...
         self.m_armor = None
         self.m_weapon = None
-        self.m_GladiatorStatistics = GladiatorStatistics
+        self.m_GladiatorStatistics = GladiatorStatistics()
 
     def __str__(self):
         return self.m_name
@@ -204,3 +204,4 @@ class Gladiator(Serializable):
               f"            Crit damage: {self.get_crit_scale()}\n"
               f"             Dodge chance: {self.get_dodge_chance()}\n")
         self.m_GladiatorStatistics.print_gladiator_statistics()
+

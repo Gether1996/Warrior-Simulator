@@ -1,5 +1,7 @@
 from worldGenerator import *
 import time
+import pyinputplus as pyip
+from termcolor import colored
 
 
 class RunGame:
@@ -9,10 +11,10 @@ class RunGame:
         self.world = ...
 
     def print_header(self):
-        print("\n"
-              "ßßßßßßßßßßßßßßßßßßßßßßßß\n"
-              "   Medieval Simulator \n"
-              "ßßßßßßßßßßßßßßßßßßßßßßßß\n")
+        print(colored("\n"
+                      "==============================\n"
+                      "      Medieval Simulator \n"
+                      "==============================\n", "light_blue"))
 
     def get_input_for_start(self):
         user_input = input("1. Generate new world\n"
@@ -41,24 +43,15 @@ class RunGame:
             return user_input
 
     def get_input_numOfSimulatedDays(self):
-        numOfSimulatedDays = input("Enter number of days to simulate: ")
+        numOfSimulatedDays = pyip.inputNum("Enter number of days to simulate(3 attempts, default 1): ",
+                                           limit=3, default=1)
         if int(numOfSimulatedDays) > (self.world.m_max_days - self.world.m_worldDay):
             print(f"Error, maximum days you can simulate now is {self.world.m_max_days - self.world.m_worldDay}.")
-            numOfSimulatedDays = input("Enter number of days to simulate: ")
+            numOfSimulatedDays = pyip.inputNum("Make sure to input correct number(else save and quit the game): ")
             if int(numOfSimulatedDays) > (self.world.m_max_days - self.world.m_worldDay):
-                print(f"Error, maximum days you can simulate now is {self.world.m_max_days - self.world.m_worldDay}.")
-                numOfSimulatedDays = input("Enter number of days to simulate: ")
-                if int(numOfSimulatedDays) > (self.world.m_max_days - self.world.m_worldDay):
-                    print(f"Error, last chance to input correct number or the world will save and shut down.")
-                    numOfSimulatedDays = input("Enter number of days to simulate: ")
-                    if int(numOfSimulatedDays) > (self.world.m_max_days - self.world.m_worldDay):
-                        self.worldGenerator.save_world(self.world)
-                        print("\nClosing game.")
-                        quit()
-                    else:
-                        return numOfSimulatedDays
-                else:
-                    return numOfSimulatedDays
+                self.worldGenerator.save_world(self.world)
+                print("\nClosing game.")
+                quit()
             else:
                 return numOfSimulatedDays
         else:
@@ -82,9 +75,8 @@ class RunGame:
 
     def world_menu(self):
         self.print_header()
-        print(f"\n"
-              f"Welcome to world {self.world.m_world_name}!\n"
-              f"Current day is {self.world.m_worldDay} out of {self.world.m_max_days}.\n")
+        print(f"Welcome to world " + colored(self.world.m_world_name, "cyan") + "!\n"
+                                                                                f"Current day is {self.world.m_worldDay} out of {self.world.m_max_days}.\n")
         user_input = self.get_input_for_menu()
         if user_input == "1":
             numOfSimulatedDays = self.get_input_numOfSimulatedDays()

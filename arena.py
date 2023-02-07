@@ -5,6 +5,7 @@ from gladiator import Gladiator
 from serializable import Serializable
 from items import ItemManager
 from statistics import ArenaStatistics
+from termcolor import colored
 
 
 class Arena(Serializable):
@@ -65,7 +66,8 @@ class Arena(Serializable):
     def progress_day(self):
 
         self.fill_schedule()
-        print(f"# Arena {self.m_arenaName.upper()} planned schedule:")
+        arena_name = self.m_arenaName.upper()
+        print("# Arena " + colored(arena_name, "light_cyan") + " planned schedule:")
 
         i = 0
         for day in self.m_arenaSchedule:
