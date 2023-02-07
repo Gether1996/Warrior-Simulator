@@ -67,7 +67,7 @@ class Arena(Serializable):
 
         self.fill_schedule()
         arena_name = self.m_arenaName.upper()
-        print("# Arena " + colored(arena_name, "light_cyan") + " planned schedule:")
+        print("# Arena " + colored(arena_name, config_ColorOfArenas) + " planned schedule:")
 
         i = 0
         for day in self.m_arenaSchedule:

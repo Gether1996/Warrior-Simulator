@@ -37,6 +37,12 @@ config_GladiatorBaseDodgeChance = 5
 config_GladiatorAgilityScalingDodgeChance = 1
 config_GladiatorVitalityScalingHealth = 0.8
 
+################################# COLORS #####################################
+config_ColorOfWorld = config['COLORS']['Color_of_world']
+config_ColorOfMenuAndSeparators = config['COLORS']['Color_of_menu_and_separators']
+config_ColorOfArenas = config['COLORS']['Color_of_arenas']
+config_ColorOfGladiators = config['COLORS']['Color_of_gladiators']
+
 ################################# RACES #####################################
 ################################# Human #####################################
 config_HumanStrengthBonus = int(config['HUMAN']['Strength'])

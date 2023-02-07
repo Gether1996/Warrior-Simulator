@@ -14,7 +14,7 @@ class RunGame:
         print(colored("\n"
                       "==============================\n"
                       "      Medieval Simulator \n"
-                      "==============================\n", "light_blue"))
+                      "==============================\n", config_ColorOfMenuAndSeparators))
 
     def get_input_for_start(self):
         user_input = input("1. Generate new world\n"
@@ -75,8 +75,8 @@ class RunGame:
 
     def world_menu(self):
         self.print_header()
-        print(f"Welcome to world " + colored(self.world.m_world_name, "cyan") + "!\n"
-                                                                                f"Current day is {self.world.m_worldDay} out of {self.world.m_max_days}.\n")
+        print("Welcome to world " + colored(self.world.m_world_name, config_ColorOfWorld) + "!\n" 
+              f"Current day is {self.world.m_worldDay} out of {self.world.m_max_days}.\n")
         user_input = self.get_input_for_menu()
         if user_input == "1":
             numOfSimulatedDays = self.get_input_numOfSimulatedDays()
