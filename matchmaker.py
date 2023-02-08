@@ -16,19 +16,35 @@ class Matchmaker:
         if self.m_event == Schedule.Freeforall:
             self.assemble_teams_for_FFA()
 
-    def assemble_teams_for_1v1(self):
+        def assemble_teams_for_1v1(self):
         sorted_gladiators_by_total_matches = self.m_gladiators
         sorted_gladiators_by_total_matches.sort(key=lambda x: x.m_GladiatorStatistics.m_total_matches, reverse=True)
         team_pairs = []
+
         while len(sorted_gladiators_by_total_matches) != 0:
             gladiator1 = sorted_gladiators_by_total_matches[0]
+            random_numbers_for_color = [x for x in range(1, 11)]
+            randomly_chosen_color = random.choice(random_numbers_for_color)
+            team1 = Team([gladiator1], randomly_chosen_color)
+            team1.generate_name_for_team()
+            random_numbers_for_color.remove(randomly_chosen_color)
+
             if len(sorted_gladiators_by_total_matches) > 2:
                 gladiator2 = sorted_gladiators_by_total_matches[random.randint(1, 2)]
+                randomly_chosen_second_color = random.choice(random_numbers_for_color)
+                team2 = Team([gladiator2], randomly_chosen_second_color)
+                team2.generate_name_for_team()
+
             elif len(sorted_gladiators_by_total_matches) == 2:
                 gladiator2 = sorted_gladiators_by_total_matches[1]
+                randomly_chosen_second_color = random.choice(random_numbers_for_color)
+                team2 = Team([gladiator2], randomly_chosen_second_color)
+                team2.generate_name_for_team()
+
             else:
                 break
-            team_pairs.append([gladiator1, gladiator2])
+
+            team_pairs.append([team1, team2])
             sorted_gladiators_by_total_matches.remove(gladiator1)
             sorted_gladiators_by_total_matches.remove(gladiator2)
         return team_pairs
