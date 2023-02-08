@@ -42,6 +42,7 @@ config_ColorOfWorld = config['COLORS']['Color_of_world']
 config_ColorOfMenuAndSeparators = config['COLORS']['Color_of_menu_and_separators']
 config_ColorOfArenas = config['COLORS']['Color_of_arenas']
 config_ColorOfGladiators = config['COLORS']['Color_of_gladiators']
+config_NumOfColors = int(config['COLORS']['Num_of_colors'])
 
 ################################# RACES #####################################
 ################################# Human #####################################

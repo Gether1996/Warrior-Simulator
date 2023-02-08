@@ -43,7 +43,7 @@ class Matchmaker:
 
         while len(sorted_gladiators_by_total_matches) != 0:
             gladiator1 = sorted_gladiators_by_total_matches[0]
-            random_numbers_for_color = [x for x in range(1, 11)]
+            random_numbers_for_color = [x for x in range(1, (config_NumOfColors + 1))]
             randomly_chosen_color = random.choice(random_numbers_for_color)
             team1 = Team([gladiator1], randomly_chosen_color)
             team1.generate_name_for_team()
