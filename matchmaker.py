@@ -4,16 +4,16 @@ from enums import Schedule, Colors
 
 class Matchmaker:
 
-    def __init__(self, m_gladiators=[]):
-        self.m_gladiators = []
-        self.m_events = Schedule
+    def __init__(self, gladiators, event):
+        self.m_gladiators = gladiators
+        self.m_event = Schedule(event)
 
     def assemble_teams(self, event):
-        if event == self.m_events.Duel:
+        if self.m_event == Schedule.Duel:
             self.assemble_teams_for_1v1()
-        if event == self.m_events.Teamgame:
+        if self.m_event == Schedule.Teamgame:
             self.assemble_teams_for_team_matches()
-        if event == self.m_events.Freeforall:
+        if self.m_event == Schedule.Freeforall:
             self.assemble_teams_for_FFA()
 
     def assemble_teams_for_1v1(self):
@@ -73,7 +73,7 @@ class Team:
 
     def __init__(self, gladiators, team_color):
         self.m_gladiators = gladiators
-        self.m_team_color = team_color
+        self.m_team_color = Colors(team_color)
         self.m_team_name = ...
 
     def __str__(self):
@@ -85,10 +85,6 @@ class Team:
         else:
             for gladiator in self.m_gladiators:
                 self.m_team_name = gladiator.m_name
-
-    def assign_color(self):
-        team_color = Colors(self.m_team_color)
-        pass
 
 
 #
