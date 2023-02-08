@@ -82,3 +82,10 @@ config_TraitLuckPenalty = int(config['TRAITS']['Unfortunate_effect'])
 
 ################################## ITEMS #####################################
 config_MaximumArmorReduction = int(config['ITEMS']['Maximum_armor_reduction'])
+
+############################# MatchMaker #####################################
+config_MaximumDifferenceInFame = int(config['MATCHMAKER']['Maximum_difference_in_fame'])
+
+################################## TEAMS #####################################
+team_names = open('team_names.txt')
+config_ListOfTeamNames = [line.rstrip() for line in set(team_names)]

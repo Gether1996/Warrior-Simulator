@@ -25,3 +25,16 @@ class Traits(Enum):
     Fragile = 6
     Blessed = 7
     Unfortunate = 8
+
+
+class Colors(Enum):
+    Red = 1
+    Blue = 2
+    Yellow = 3
+    Green = 4
+    Cyan = 5
+    Magenta = 6
+    Light_Cyan = 7
+    Light_Red = 8
+    Light_Yellow = 9
+    Light_Green = 10
