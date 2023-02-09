@@ -100,7 +100,7 @@ class Matchmaker:
                     randomly_chosen_second_color = random.choice(random_numbers_for_color)
                     team2 = Team([glads_for_team2], randomly_chosen_second_color)
 
-                    team_pair.append([team1.m_team_name, team2.m_team_name])
+                    team_pair.append([team1, team2])
                     glads_for_team1.clear()
                     glads_for_team2.clear()
                     team1_fame, team2_fame = 0, 0
@@ -113,7 +113,7 @@ class Matchmaker:
                 randomly_chosen_second_color = random.choice(random_numbers_for_color)
                 team2 = Team([glads_for_team2], randomly_chosen_second_color)
 
-                team_pair.append([team1.m_team_name, team2.m_team_name])
+                team_pair.append([team1, team2])
                 list_of_team_pairs.append(team_pair)
         return list_of_team_pairs
 
