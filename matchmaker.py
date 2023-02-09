@@ -1,5 +1,3 @@
-import random
-
 from arena import *
 from enums import Schedule, Colors
 
@@ -9,7 +7,7 @@ class Team:
     def __init__(self, gladiators, team_color):
         self.m_gladiators = gladiators
         self.m_team_color = Colors(team_color)
-        self.m_team_name = ...
+        self.m_team_name = random.choice(config_ListOfTeamNames)
 
     def __str__(self):
         return self.m_team_name
@@ -72,23 +70,52 @@ class Matchmaker:
     def assemble_teams_for_team_matches(self):
         sorted_gladiators_by_fame = self.m_gladiators
         sorted_gladiators_by_fame.sort(key=lambda x: x.m_GladiatorStatistics.m_gladiator_fame, reverse=True)
-        team1, team2 = [], []
+        glads_for_team1, glads_for_team2 = [], []
         team_pair = []
+        list_of_team_pairs = []
+        team1_fame, team2_fame = 0, 0
 
-        while len(sorted_gladiators_by_fame) != 0:
-            gladiator1 = sorted_gladiators_by_fame[0]
-            if len(sorted_gladiators_by_fame) > 1:
-                gladiator2 = sorted_gladiators_by_fame[1]
-                team1.append(gladiator1)
-                team2.append(gladiator2)
-                sorted_gladiators_by_fame.remove(gladiator1)
-                sorted_gladiators_by_fame.remove(gladiator2)
+        if len(sorted_gladiators_by_fame) < 4:
+            return []
+        else:
+            while len(sorted_gladiators_by_fame) != 0:
+                while (len(glads_for_team1) + len(glads_for_team2)) != 10:
+                    if len(sorted_gladiators_by_fame) != 0:
+                        glad_to_append = sorted_gladiators_by_fame[0]
+                        if team2_fame >= team1_fame:
+                            glads_for_team1.append(glad_to_append)
+                            team1_fame += glad_to_append.m_GladiatorStatistics.m_gladiator_fame
+                        else:
+                            glads_for_team2.append(glad_to_append)
+                            team2_fame += glad_to_append.m_GladiatorStatistics.m_gladiator_fame
+                        sorted_gladiators_by_fame.remove(glad_to_append)
+                    else:
+                        break
+                else:
+                    random_numbers_for_color = [x for x in range(1, (config_NumOfColors + 1))]
+                    randomly_chosen_first_color = random.choice(random_numbers_for_color)
+                    team1 = Team([glads_for_team1], randomly_chosen_first_color)
+                    random_numbers_for_color.remove(randomly_chosen_first_color)
+
+                    randomly_chosen_second_color = random.choice(random_numbers_for_color)
+                    team2 = Team([glads_for_team2], randomly_chosen_second_color)
+
+                    team_pair.append([team1.m_team_name, team2.m_team_name])
+                    glads_for_team1.clear()
+                    glads_for_team2.clear()
+                    team1_fame, team2_fame = 0, 0
             else:
-                team2.append(gladiator1)
-                sorted_gladiators_by_fame.remove(gladiator1)
-        team_pair.append(team1)
-        team_pair.append(team2)
-        return team_pair
+                random_numbers_for_color = [x for x in range(1, (config_NumOfColors + 1))]
+                randomly_chosen_first_color = random.choice(random_numbers_for_color)
+                team1 = Team([glads_for_team1], randomly_chosen_first_color)
+                random_numbers_for_color.remove(randomly_chosen_first_color)
+
+                randomly_chosen_second_color = random.choice(random_numbers_for_color)
+                team2 = Team([glads_for_team2], randomly_chosen_second_color)
+
+                team_pair.append([team1.m_team_name, team2.m_team_name])
+                list_of_team_pairs.append(team_pair)
+        return list_of_team_pairs
 
     def assemble_teams_for_FFA(self):
         sorted_gladiators_by_fame = self.m_gladiators
@@ -105,17 +132,17 @@ class Matchmaker:
         else:
             return []
 
-#
+
 #     def add_gladiators(self):
-#         for x in range(8):
+#         for x in range(45):
 #             gladiator = Gladiator()
 #             gladiator.generate_default_gladiator()
-#             gladiator.m_GladiatorStatistics.m_total_matches = random.randint(1, 50)
+#             gladiator.m_GladiatorStatistics.m_gladiator_fame = random.randint(1, 150)
 #             self.m_gladiators.append(gladiator)
 #
 #
 # matchmaker = Matchmaker()
 # matchmaker.add_gladiators()
 # for gladiator in matchmaker.m_gladiators:
-#     print(gladiator.m_name, gladiator.m_GladiatorStatistics.m_total_matches)
-# print(matchmaker.assemble_teams(Schedule.Duel))
+#     print(gladiator.m_name, gladiator.m_GladiatorStatistics.m_gladiator_fame)
+# print(matchmaker.assemble_teams_for_team_matches())
