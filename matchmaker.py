@@ -18,8 +18,8 @@ class Team:
         if len(self.m_gladiators) > 1:
             self.m_team_name = random.choice(config_ListOfTeamNames)
         else:
-            for gladiator in self.m_gladiators:
-                self.m_team_name = gladiator.m_name
+            for glad in self.m_gladiators:
+                self.m_team_name = glad.m_name
 
 
 class Matchmaker:
@@ -120,51 +120,38 @@ class Matchmaker:
         return team_pairs_to_return
 
     def assemble_teams_for_FFA(self):
-        sorted_gladiators_by_fame = self.m_gladiators
-        sorted_gladiators_by_fame.sort(key=lambda x: x.m_GladiatorStatistics.m_gladiator_fame)
+        gladiators = self.m_gladiators
+        gladiators.sort(key=lambda x: x.m_GladiatorStatistics.m_gladiator_fame)
+        result = []
+        group = [gladiators[0]]
+        for i in range(1, len(gladiators)):
+            if abs(gladiators[i].m_GladiatorStatistics.m_gladiator_fame -
+                   group[-1].m_GladiatorStatistics.m_gladiator_fame) <= config_MaximumDifferenceInFame \
+                    and len(group) < 10:
+                group.append(gladiators[i])
+            else:
+                list_of_teams = []
+                for gladi in group:
+                    team_to_append = Team(gladi, random.randint(1, 10))
+                    list_of_teams.append(team_to_append)
+                result.append(list_of_teams)
+                group = [gladiators[i]]
+        list_of_teams = []
+        for gladi in group:
+            team_to_append = Team(gladi, random.randint(1, 10))
+            list_of_teams.append(team_to_append)
+        result.append(list_of_teams)
+        final_result = []
+        for res in result:
+            if len(res) > 2:
+                final_result.append(res)
+        return final_result
 
-        teams_to_return1, teams_to_return2 = [], []
-        comparing_gladiator = sorted_gladiators_by_fame[0]
-        team = Team([comparing_gladiator], random.randint(1, config_NumOfColors))
-        teams_to_return1.append(team)
-        sorted_gladiators_by_fame.remove(comparing_gladiator)
-
-        for gladiator in sorted_gladiators_by_fame:
-            if gladiator.m_GladiatorStatistics.m_gladiator_fame + config_MaximumDifferenceInFame > \
-                comparing_gladiator.m_GladiatorStatistics.m_gladiator_fame:
-                pass
-
-
-
-
-
-
-
-
-
-
-
-
-
-        # top_gladiator = sorted_gladiators_by_fame[-1]
-        # sorted_gladiators_by_fame.remove(top_gladiator)
-        # FFA_team = [top_gladiator]
-        # for gladiator in sorted_gladiators_by_fame:
-        #     if (gladiator.m_GladiatorStatistics.m_gladiator_fame + config_MaximumDifferenceInFame) > \
-        #             top_gladiator.m_GladiatorStatistics.m_gladiator_fame:
-        #         FFA_team.append(gladiator)
-        # if len(FFA_team) > 2:
-        #     return FFA_team
-        # else:
-        #     return []
-
-
-#
 #     def add_gladiators(self):
-#         for x in range(45):
+#         for x in range(100):
 #             gladiator = Gladiator()
 #             gladiator.generate_default_gladiator()
-#             gladiator.m_GladiatorStatistics.m_gladiator_fame = random.randint(1, 150)
+#             gladiator.m_GladiatorStatistics.m_gladiator_fame = random.randint(1, 800)
 #             self.m_gladiators.append(gladiator)
 #
 #
@@ -172,5 +159,7 @@ class Matchmaker:
 # matchmaker.add_gladiators()
 # for gladiator in matchmaker.m_gladiators:
 #     print(gladiator.m_name, gladiator.m_GladiatorStatistics.m_gladiator_fame)
-# print(matchmaker.assemble_teams_for_team_matches())
+# print(matchmaker.assemble_teams_for_FFA())
 #
+
+
