@@ -124,34 +124,35 @@ class Matchmaker:
         gladiators.sort(key=lambda x: x.m_GladiatorStatistics.m_gladiator_fame)
         result = []
         group = [gladiators[0]]
+        color_pool = list(range(1, config_NumOfColors + 1))
         for i in range(1, len(gladiators)):
             if abs(gladiators[i].m_GladiatorStatistics.m_gladiator_fame -
-                   group[-1].m_GladiatorStatistics.m_gladiator_fame) <= config_MaximumDifferenceInFame \
+                   group[0].m_GladiatorStatistics.m_gladiator_fame) <= config_MaximumDifferenceInFame \
                     and len(group) < 10:
                 group.append(gladiators[i])
             else:
                 list_of_teams = []
                 for gladi in group:
-                    team_to_append = Team(gladi, random.randint(1, 10))
+                    team_to_append = Team(gladi, random.choice(color_pool))
+                    color_pool.remove(team_to_append.m_team_color.value)
                     list_of_teams.append(team_to_append)
                 result.append(list_of_teams)
                 group = [gladiators[i]]
+                color_pool = list(range(1, config_NumOfColors + 1))   #resets color pool
         list_of_teams = []
         for gladi in group:
-            team_to_append = Team(gladi, random.randint(1, 10))
+            team_to_append = Team(gladi, random.choice(color_pool))
+            color_pool.remove(team_to_append.m_team_color.value)
             list_of_teams.append(team_to_append)
         result.append(list_of_teams)
-        final_result = []
-        for res in result:
-            if len(res) > 2:
-                final_result.append(res)
+        final_result = [res for res in result if len(res) > 2]
         return final_result
 
 #     def add_gladiators(self):
-#         for x in range(100):
+#         for x in range(10):
 #             gladiator = Gladiator()
 #             gladiator.generate_default_gladiator()
-#             gladiator.m_GladiatorStatistics.m_gladiator_fame = random.randint(1, 800)
+#             gladiator.m_GladiatorStatistics.m_gladiator_fame = random.randint(1, 400)
 #             self.m_gladiators.append(gladiator)
 #
 #
@@ -160,6 +161,7 @@ class Matchmaker:
 # for gladiator in matchmaker.m_gladiators:
 #     print(gladiator.m_name, gladiator.m_GladiatorStatistics.m_gladiator_fame)
 # print(matchmaker.assemble_teams_for_FFA())
+
+# fame_list = [g.m_GladiatorStatistics.m_gladiator_fame for g in group]
+# result.append(fame_list)                                   ---- toto prehodit za result.append(list_of_teams) na lepsi print famu
 #
-
-
