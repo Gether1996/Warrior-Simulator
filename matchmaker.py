@@ -76,6 +76,7 @@ class Matchmaker:
         team_pair = []
         team_pairs_to_return = []
         team1_fame, team2_fame = 0, 0
+        color_pool = list(range(1, config_NumOfColors + 1))
 
         if len(sorted_gladiators_by_fame) < 4:
             return []
@@ -94,26 +95,19 @@ class Matchmaker:
                     else:
                         break
                 else:
-                    random_numbers_for_color = [x for x in range(1, (config_NumOfColors + 1))]
-                    randomly_chosen_first_color = random.choice(random_numbers_for_color)
-                    team1 = Team([glads_for_team1], randomly_chosen_first_color)
-                    random_numbers_for_color.remove(randomly_chosen_first_color)
-
-                    randomly_chosen_second_color = random.choice(random_numbers_for_color)
-                    team2 = Team([glads_for_team2], randomly_chosen_second_color)
+                    team1 = Team([glads_for_team1], random.choice(color_pool))
+                    color_pool.remove(team1.m_team_color.value)
+                    team2 = Team([glads_for_team2], random.choice(color_pool))
 
                     team_pair.append([team1, team2])
                     glads_for_team1.clear()
                     glads_for_team2.clear()
                     team1_fame, team2_fame = 0, 0
+                    color_pool = list(range(1, config_NumOfColors + 1))
             else:
-                random_numbers_for_color = [x for x in range(1, (config_NumOfColors + 1))]
-                randomly_chosen_first_color = random.choice(random_numbers_for_color)
-                team1 = Team([glads_for_team1], randomly_chosen_first_color)
-                random_numbers_for_color.remove(randomly_chosen_first_color)
-
-                randomly_chosen_second_color = random.choice(random_numbers_for_color)
-                team2 = Team([glads_for_team2], randomly_chosen_second_color)
+                team1 = Team([glads_for_team1], random.choice(color_pool))
+                color_pool.remove(team1.m_team_color.value)
+                team2 = Team([glads_for_team2], random.choice(color_pool))
 
                 team_pair.append([team1, team2])
                 team_pairs_to_return.append(team_pair)
