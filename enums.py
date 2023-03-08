@@ -28,13 +28,13 @@ class Traits(Enum):
 
 
 class Colors(Enum):
-    Red = 1
-    Blue = 2
-    Yellow = 3
-    Green = 4
-    Cyan = 5
-    Magenta = 6
-    Light_Cyan = 7
-    Light_Red = 8
-    Light_Yellow = 9
-    Light_Green = 10
+    red = 1
+    blue = 2
+    yellow = 3
+    green = 4
+    cyan = 5
+    magenta = 6
+    light_cyan = 7
+    light_red = 8
+    light_yellow = 9
+    light_green = 10

@@ -2,6 +2,7 @@ from worldGenerator import *
 import time
 import pyinputplus as pyip
 from termcolor import colored
+import battlefield
 
 
 class RunGame:
@@ -33,11 +34,12 @@ class RunGame:
         user_input = input("1. Simulate world\n"
                            "2. Save and quit\n"
                            "3. Show statistics\n"
+                           "4. Print battlefield\n"
                            "\n"
                            "Enter your choice: ")
 
-        while user_input not in ["1", "2", "3"]:
-            print("\nWrong input! Insert 1, 2 or 3\n")
+        while user_input not in ["1", "2", "3", "4"]:
+            print("\nWrong input! Insert 1, 2, 3 or 4\n")
             return self.get_input_for_menu()
         else:
             return user_input
@@ -104,6 +106,13 @@ class RunGame:
             os.system('cls')
             self.world.print_world_statistics()
             self.world.save_stats_into_txt()
+            input("\nPress Enter to run World Menu again...")
+            os.system('cls')
+            self.world_menu()
+
+        elif user_input == "4":
+            os.system('cls')
+            battlefield.get_teams_and_event()
             input("\nPress Enter to run World Menu again...")
             os.system('cls')
             self.world_menu()

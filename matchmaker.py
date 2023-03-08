@@ -141,16 +141,23 @@ class Matchmaker:
         final_result = [res for res in result if len(res) > 2]
         return final_result
 
-#     def add_gladiators(self):
-#         for x in range(10):
-#             gladiator = Gladiator()
-#             gladiator.generate_default_gladiator()
-#             gladiator.m_GladiatorStatistics.m_gladiator_fame = random.randint(1, 400)
-#             self.m_gladiators.append(gladiator)
+    # def add_gladiators(self):
+    #     for x in range(12):
+    #         gladiator = Gladiator()
+    #         gladiator.generate_default_gladiator()
+    #         gladiator.m_GladiatorStatistics.m_total_matches = random.randint(1, 400)
+    #         self.m_gladiators.append(gladiator)
 #
 #
 # matchmaker = Matchmaker()
 # matchmaker.add_gladiators()
+#
+# team_pairs = matchmaker.assemble_teams_for_1v1()
+#
+# for team_pair in team_pairs:
+#     for gladiator in team_pair[0].m_gladiators + team_pair[1].m_gladiators:
+#         print(gladiator.m_GladiatorStatistics.m_total_matches)
+
 # for gladiator in matchmaker.m_gladiators:
 #     print(gladiator.m_name, gladiator.m_GladiatorStatistics.m_gladiator_fame)
 # print(matchmaker.assemble_teams_for_FFA())
