@@ -54,7 +54,7 @@ class Matchmaker:
             elif len(sorted_gladiators_by_total_matches) == 2:
                 gladiator2 = sorted_gladiators_by_total_matches[1]
                 team2 = Team(gladiator2, random.choice(color_pool))
-                color_pool = list(range(1, config_NumOfColors + 1)) ############## tu niekde chyba, v tejto func
+                color_pool = list(range(1, config_NumOfColors + 1))
 
             else:
                 break
@@ -94,7 +94,7 @@ class Matchmaker:
                     team2 = Team(glads_for_team2, random.choice(color_pool))
 
                     team_pairs.append([team1, team2])
-                    glads_for_team1.clear()
+                    glads_for_team1.clear()         # tu niekde chyba
                     glads_for_team2.clear()
                     team1_fame, team2_fame = 0, 0
                     color_pool = list(range(1, config_NumOfColors + 1))
