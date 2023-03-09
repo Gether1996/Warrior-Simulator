@@ -34,7 +34,7 @@ class RunGame:
         user_input = input("1. Simulate world\n"
                            "2. Save and quit\n"
                            "3. Show statistics\n"
-                           "4. Print battlefield\n"
+                           "4. Battlefield\n"
                            "\n"
                            "Enter your choice: ")
 
@@ -112,7 +112,9 @@ class RunGame:
 
         elif user_input == "4":
             os.system('cls')
-            battlefield.get_teams_and_event()
+            event = battlefield.get_event_for_battlefield()
+            os.system('cls')
+            battlefield.draw_areas(event)
             input("\nPress Enter to run World Menu again...")
             os.system('cls')
             self.world_menu()

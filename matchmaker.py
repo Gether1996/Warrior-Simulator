@@ -7,19 +7,18 @@ from enums import Schedule, Colors
 class Team:
 
     def __init__(self, gladiators, team_color):
-        self.m_gladiators = gladiators
+        self.m_gladiators = []
+        if isinstance(gladiators, list):
+            self.m_gladiators = gladiators
+        else:
+            self.m_gladiators.append(gladiators)
         self.m_team_color = Colors(team_color)
-        self.m_team_name = random.choice(config_ListOfTeamNames)
-
-    def __str__(self):
-        return self.m_team_name
-
-    def generate_name_for_team(self):
         if len(self.m_gladiators) > 1:
             self.m_team_name = random.choice(config_ListOfTeamNames)
+        elif len(self.m_gladiators) == 1:
+            self.m_team_name = self.m_gladiators[0].m_name
         else:
-            for glad in self.m_gladiators:
-                self.m_team_name = glad.m_name
+            self.m_team_name = "G"
 
 
 class Matchmaker:
@@ -44,21 +43,18 @@ class Matchmaker:
 
         while len(sorted_gladiators_by_total_matches) != 0:
             gladiator1 = sorted_gladiators_by_total_matches[0]
-            team1 = Team([gladiator1], random.choice(color_pool))
-            team1.generate_name_for_team()
+            team1 = Team(gladiator1, random.choice(color_pool))
             color_pool.remove(team1.m_team_color.value)
 
             if len(sorted_gladiators_by_total_matches) > 2:
                 gladiator2 = sorted_gladiators_by_total_matches[random.randint(1, 2)]
-                team2 = Team([gladiator2], random.choice(color_pool))
-                team2.generate_name_for_team()
+                team2 = Team(gladiator2, random.choice(color_pool))
                 color_pool = list(range(1, config_NumOfColors + 1))
 
             elif len(sorted_gladiators_by_total_matches) == 2:
                 gladiator2 = sorted_gladiators_by_total_matches[1]
-                team2 = Team([gladiator2], random.choice(color_pool))
-                team2.generate_name_for_team()
-                color_pool = list(range(1, config_NumOfColors + 1))
+                team2 = Team(gladiator2, random.choice(color_pool))
+                color_pool = list(range(1, config_NumOfColors + 1)) ############## tu niekde chyba, v tejto func
 
             else:
                 break
@@ -72,8 +68,7 @@ class Matchmaker:
         sorted_gladiators_by_fame = self.m_gladiators
         sorted_gladiators_by_fame.sort(key=lambda x: x.m_GladiatorStatistics.m_gladiator_fame, reverse=True)
         glads_for_team1, glads_for_team2 = [], []
-        team_pair = []
-        team_pairs_to_return = []
+        team_pairs = []
         team1_fame, team2_fame = 0, 0
         color_pool = list(range(1, config_NumOfColors + 1))
 
@@ -81,7 +76,7 @@ class Matchmaker:
             return []
         else:
             while len(sorted_gladiators_by_fame) != 0:
-                while (len(glads_for_team1) + len(glads_for_team2)) != config_NumOfColors:
+                while (len(glads_for_team1) + len(glads_for_team2)) != 20:
                     if len(sorted_gladiators_by_fame) != 0:
                         glad_to_append = sorted_gladiators_by_fame[0]
                         if team2_fame >= team1_fame:
@@ -94,23 +89,23 @@ class Matchmaker:
                     else:
                         break
                 else:
-                    team1 = Team([glads_for_team1], random.choice(color_pool))
+                    team1 = Team(glads_for_team1, random.choice(color_pool))
                     color_pool.remove(team1.m_team_color.value)
-                    team2 = Team([glads_for_team2], random.choice(color_pool))
+                    team2 = Team(glads_for_team2, random.choice(color_pool))
 
-                    team_pair.append([team1, team2])
+                    team_pairs.append([team1, team2])
                     glads_for_team1.clear()
                     glads_for_team2.clear()
                     team1_fame, team2_fame = 0, 0
                     color_pool = list(range(1, config_NumOfColors + 1))
             else:
-                team1 = Team([glads_for_team1], random.choice(color_pool))
+                team1 = Team(glads_for_team1, random.choice(color_pool))
                 color_pool.remove(team1.m_team_color.value)
-                team2 = Team([glads_for_team2], random.choice(color_pool))
+                team2 = Team(glads_for_team2, random.choice(color_pool))
 
-                team_pair.append([team1, team2])
-                team_pairs_to_return.append(team_pair)
-        return team_pairs_to_return
+                team_pairs.append([team1, team2])
+
+        return team_pairs
 
     def assemble_teams_for_FFA(self):
         gladiators = self.m_gladiators
