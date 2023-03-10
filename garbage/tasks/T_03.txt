@@ -21,3 +21,24 @@ Tifernum Tiberinum
 Save this file next to our project, and load the names into a list of strings in config.py,
 use this list to initialize the name of the arena upon arena's creation. The name is chosen from the
 list by random.
+
+
+    def assemble_teams_for_FFA(self):
+        gladiators = self.m_gladiators
+        gladiators.sort(key=lambda x: x.m_GladiatorStatistics.m_gladiator_fame, reverse=True)
+        result = []
+        team = []
+        for gladi in gladiators:
+            if not team or abs(gladi.m_GladiatorStatistics.m_gladiator_fame - team[0].m_GladiatorStatistics.m_gladiator_fame) <= config_MaximumDifferenceInFame:
+                if len(team) < 10:
+                    team.append(gladi)
+            else:
+                team_object = Team(team, random.randint(1, 10))
+                team_object.generate_name_for_team()
+                result.append(team_object)
+                team = [gladi]
+        team_object = Team(team, random.randint(1, 10))
+        team_object.generate_name_for_team()
+        result.append(team_object)
+        final_result = [team for team in result if len(team.m_gladiators) > 1]
+        return final_result

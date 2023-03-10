@@ -38,7 +38,7 @@ def draw_areas(event):
     coordinates = [(x, y) for x in range(1, 11) for y in range(1, 11)]
     matchmaker = Matchmaker()
     counter = 0
-    for x in range(17):
+    for x in range(5):
         gladiator = Gladiator()
         gladiator.generate_default_gladiator()
         gladiator.m_GladiatorStatistics.m_gladiator_fame = random.randint(1, 300)

@@ -1,0 +1,13 @@
+                Current world day: 26
+                Arena with highest fame: [96mColonia Flavia Scupi[0m!     
+
+                Gladiator with most matches: [93mNone[0m!
+                Coming from arena:  [96mNone[0m!
+
+                Gladiator with most fame: [93mThe Deserter[0m!
+                Coming from arena: [96mColonia Flavia Scupi[0m!
+
+ # Gladiator with the highest total damage done: [93mNone[0m!
+ # Gladiator with the highest total damage avoided: [93mNone[0m!
+ # Gladiator with the most finishing blows: [93mNone[0m!
+ # Gladiator with the highest single blow damage delivered: [93mNone[0m!
