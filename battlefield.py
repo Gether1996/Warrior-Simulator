@@ -1,4 +1,5 @@
 from matchmaker import *
+import copy
 
 char_colors = {'*': 'white', '#': 'light_magenta'}
 
@@ -6,6 +7,8 @@ matrix = [['#' for _ in range(12)] for _ in range(12)]
 for i in range(1, 11):
     for j in range(1, 11):
         matrix[i][j] = '*'
+
+matrix_copy = copy.deepcopy(matrix)
 
 
 def print_matrix(counter):
@@ -31,11 +34,11 @@ def get_event_for_battlefield():
 
 
 def draw_areas(event):
-    original_matrix = [row[:] for row in matrix]
+    global matrix
     coordinates = [(x, y) for x in range(1, 11) for y in range(1, 11)]
     matchmaker = Matchmaker()
     counter = 0
-    for x in range(25):
+    for x in range(17):
         gladiator = Gladiator()
         gladiator.generate_default_gladiator()
         gladiator.m_GladiatorStatistics.m_gladiator_fame = random.randint(1, 300)
@@ -52,10 +55,7 @@ def draw_areas(event):
             matrix[-2][-2] = char2
             counter += 1
             print_matrix(counter)
-        for i in range(len(matrix)):
-            for j in range(len(matrix[i])):
-                if matrix[i][j] != original_matrix[i][j]:
-                    matrix[i][j] = original_matrix[i][j]  # resets back to original matrix after printing modified one
+            matrix = copy.deepcopy(matrix_copy)
 
     elif event == "2":
         list_of_team_pairs = matchmaker.assemble_teams_for_team_matches()
@@ -68,6 +68,7 @@ def draw_areas(event):
             matrix[10] = "#" + char2 * len(team_pair[1].m_gladiators) + "*" * (10 - len(team_pair[1].m_gladiators)) + "#"
             counter += 1
             print_matrix(counter)
+            matrix = copy.deepcopy(matrix_copy)
 
     elif event == "3":
         list_of_teams = matchmaker.assemble_teams_for_FFA()
@@ -80,10 +81,7 @@ def draw_areas(event):
                 coordinates.remove(team_random_coord)
             counter += 1
             print_matrix(counter)
-            for i in range(len(matrix)):
-                for j in range(len(matrix[i])):
-                    if matrix[i][j] != original_matrix[i][j]:
-                        matrix[i][j] = original_matrix[i][j]       # resets back to original matrix after printing modified one
+            matrix = copy.deepcopy(matrix_copy)
             coordinates = [(x, y) for x in range(1, 11) for y in range(1, 11)]
 
 
