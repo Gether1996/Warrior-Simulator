@@ -112,6 +112,7 @@ class RunGame:
 
         elif user_input == "4":
             os.system('cls')
+            self.print_header()
             event = battlefield.get_event_for_battlefield()
             os.system('cls')
             battlefield.draw_areas(event)
