@@ -17,8 +17,6 @@ class Team:
             self.m_team_name = random.choice(config_ListOfTeamNames)
         elif len(self.m_gladiators) == 1:
             self.m_team_name = self.m_gladiators[0].m_name
-        else:
-            self.m_team_name = "G"
 
 
 class Matchmaker:

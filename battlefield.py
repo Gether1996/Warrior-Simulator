@@ -53,6 +53,8 @@ def draw_areas(event):
             char_colors[char2] = team_pair[1].m_team_color.name
             matrix[1][1] = char1
             matrix[-2][-2] = char2
+            team_pair[0].m_gladiators[0].m_position = (1, 1)
+            team_pair[1].m_gladiators[0].m_position = (-2, -2)
             counter += 1
             print_matrix(counter)
             matrix = copy.deepcopy(matrix_copy)
@@ -67,6 +69,10 @@ def draw_areas(event):
             matrix[1] = "#" + char1 * len(team_pair[0].m_gladiators) + "*" * (10 - len(team_pair[0].m_gladiators)) + "#"
             matrix[10] = "#" + char2 * len(team_pair[1].m_gladiators) + "*" * (10 - len(team_pair[1].m_gladiators)) + "#"
             matrix[10] = matrix[10][::-1]
+            for index, gladi in enumerate(team_pair[0].m_gladiators):
+                gladi.m_position = (1, index)
+            for index, gladi in enumerate(team_pair[1].m_gladiators):
+                gladi.m_position = (10, 11-index)
             counter += 1
             print_matrix(counter)
             matrix = copy.deepcopy(matrix_copy)
@@ -79,7 +85,9 @@ def draw_areas(event):
                 char_colors[char] = team.m_team_color.name
                 team_random_coord = random.choice(coordinates)
                 matrix[team_random_coord[0]][team_random_coord[1]] = char
+                team.m_gladiators[0].m_position = team_random_coord
                 coordinates.remove(team_random_coord)
+
             counter += 1
             print_matrix(counter)
             matrix = copy.deepcopy(matrix_copy)

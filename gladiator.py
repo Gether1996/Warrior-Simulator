@@ -20,6 +20,7 @@ class Gladiator(Serializable):
         self.m_current_health = ...
         self.m_armor = None
         self.m_weapon = None
+        self.m_position = None
         self.m_GladiatorStatistics = GladiatorStatistics()
 
     def __str__(self):
@@ -114,6 +115,7 @@ class Gladiator(Serializable):
             "m_max_health": self.m_max_health,
             "m_current_health": self.m_current_health,
             "m_gold": self.m_gold,
+            "m_position": self.m_position,
             "m_gladiator_statistics": self.m_GladiatorStatistics.save_object()
         }
         for trait in self.m_traits:
@@ -154,6 +156,7 @@ class Gladiator(Serializable):
             weapon = Weapon()
             weapon.load_object(data["m_weapon"])
             self.m_weapon = weapon
+        self.m_position = data["m_position"]
         self.m_GladiatorStatistics = GladiatorStatistics()
         self.m_GladiatorStatistics.load_object(data["m_gladiator_statistics"])
 
