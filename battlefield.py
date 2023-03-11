@@ -38,7 +38,7 @@ def draw_areas(event):
     coordinates = [(x, y) for x in range(1, 11) for y in range(1, 11)]
     matchmaker = Matchmaker()
     counter = 0
-    for x in range(5):
+    for x in range(46):
         gladiator = Gladiator()
         gladiator.generate_default_gladiator()
         gladiator.m_GladiatorStatistics.m_gladiator_fame = random.randint(1, 300)
@@ -66,6 +66,7 @@ def draw_areas(event):
             char_colors[char2] = team_pair[1].m_team_color.name
             matrix[1] = "#" + char1 * len(team_pair[0].m_gladiators) + "*" * (10 - len(team_pair[0].m_gladiators)) + "#"
             matrix[10] = "#" + char2 * len(team_pair[1].m_gladiators) + "*" * (10 - len(team_pair[1].m_gladiators)) + "#"
+            matrix[10] = matrix[10][::-1]
             counter += 1
             print_matrix(counter)
             matrix = copy.deepcopy(matrix_copy)
