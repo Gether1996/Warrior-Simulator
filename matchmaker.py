@@ -67,15 +67,16 @@ class Matchmaker:
     def assemble_teams_for_team_matches(self):
         sorted_gladiators_by_fame = self.m_gladiators
         sorted_gladiators_by_fame.sort(key=lambda x: x.m_GladiatorStatistics.m_gladiator_fame, reverse=True)
-        glads_for_team1, glads_for_team2 = [], []
         team_pairs = []
-        team1_fame, team2_fame = 0, 0
         color_pool = list(range(1, config_NumOfColors + 1))
 
         if len(sorted_gladiators_by_fame) < 4:
             return []
         else:
+            glads_for_team1, glads_for_team2 = [], []
             while len(sorted_gladiators_by_fame) != 0:
+                glads_for_team1, glads_for_team2 = [], []
+                team1_fame, team2_fame = 0, 0
                 while (len(glads_for_team1) + len(glads_for_team2)) != 20:
                     if len(sorted_gladiators_by_fame) != 0:
                         glad_to_append = sorted_gladiators_by_fame[0]
@@ -94,18 +95,13 @@ class Matchmaker:
                     team2 = Team(glads_for_team2, random.choice(color_pool))
 
                     team_pairs.append([team1, team2])
-                    glads_for_team1.clear()         # tu niekde chyba
-                    glads_for_team2.clear()
-                    team1_fame, team2_fame = 0, 0
-                    color_pool = list(range(1, config_NumOfColors + 1))
             else:
                 team1 = Team(glads_for_team1, random.choice(color_pool))
                 color_pool.remove(team1.m_team_color.value)
                 team2 = Team(glads_for_team2, random.choice(color_pool))
 
                 team_pairs.append([team1, team2])
-
-        return team_pairs
+            return team_pairs
 
     def assemble_teams_for_FFA(self):
         gladiators = self.m_gladiators
