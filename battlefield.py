@@ -1,5 +1,6 @@
 from matchmaker import *
 import copy
+from enums import Schedule
 
 char_colors = {'*': 'white', '#': 'light_magenta'}
 
@@ -13,7 +14,7 @@ matrix_copy = copy.deepcopy(matrix)
 
 class Battlefield:
 
-    def __init__(self, field, glad_teams, event=int):
+    def __init__(self, field, glad_teams, event):
         self.field = field
         self.glad_teams = glad_teams
         self.event = event
@@ -24,7 +25,7 @@ class Battlefield:
             print(field)
 
     def generate_fields(self):
-        if self.event == 1:
+        if self.event == Schedule.Duel:
             for team_pair in self.glad_teams:
                 updated_field = copy.deepcopy(self.field)
                 char1 = team_pair[0].m_team_name[0]
@@ -37,31 +38,35 @@ class Battlefield:
                 team_pair[1].m_gladiators[0].m_position = (len(self.field)-2, len(self.field)-2)
                 self.generated_fields.append(updated_field)
 
-        elif self.event == 2:
+        elif self.event == Schedule.Teamgame:
             for team_pair in self.glad_teams:
+                updated_field = copy.deepcopy(self.field)
                 char1 = team_pair[0].m_team_name[0]
                 char2 = team_pair[1].m_team_name[0]
                 char_colors[char1] = team_pair[0].m_team_color.name
                 char_colors[char2] = team_pair[1].m_team_color.name
-                matrix[1] = "#" + char1 * len(team_pair[0].m_gladiators) + "*" * (10 - len(team_pair[0].m_gladiators)) + "#"
-                matrix[10] = "#" + char2 * len(team_pair[1].m_gladiators) + "*" * (10 - len(team_pair[1].m_gladiators)) + "#"
-                matrix[10] = matrix[10][::-1]
+                updated_field[1] = "#" + char1 * len(team_pair[0].m_gladiators) + "*" * (10 - len(team_pair[0].m_gladiators)) + "#"
+                updated_field[len(updated_field)-2] = "#" + char2 * len(team_pair[1].m_gladiators) + "*" * (10 - len(team_pair[1].m_gladiators)) + "#"
+                matrix[len(updated_field)-2] = matrix[len(updated_field)-2][::-1]
                 for index, gladi in enumerate(team_pair[0].m_gladiators):
                     gladi.m_position = (1, index)
                 for index, gladi in enumerate(team_pair[1].m_gladiators):
-                    gladi.m_position = (10, 11-index)
+                    gladi.m_position = (len(updated_field)-2, (len(updated_field)-1)-index)
+                self.generated_fields.append(updated_field)
 
-        elif self.event == 3:
+        elif self.event == Schedule.Freeforall:
+            coordinates = [(x, y) for x in range(1, len(self.field)) for y in range(1, len(self.field))]
             for teams in self.glad_teams:
+                updated_field = copy.deepcopy(self.field)
                 for team in teams:
                     char = team.m_team_name[0]
                     char_colors[char] = team.m_team_color.name
                     team_random_coord = random.choice(coordinates)
-                    matrix[team_random_coord[0]][team_random_coord[1]] = char
+                    updated_field[team_random_coord[0]][team_random_coord[1]] = char
                     team.m_gladiators[0].m_position = team_random_coord
                     coordinates.remove(team_random_coord)
-
-                coordinates = [(x, y) for x in range(1, 11) for y in range(1, 11)]
+                self.generated_fields.append(updated_field)
+                coordinates = [(x, y) for x in range(1, len(self.field)) for y in range(1, len(self.field))]  # reset coordinates
 
 
 
